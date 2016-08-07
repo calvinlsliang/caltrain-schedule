@@ -1,28 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:padding="12dp">
 
     <TextView
         android:id="@+id/times"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingRight="24dp"
+        android:textSize="18dp"
+        android:textStyle="bold"
         tools:text="8:05am - 11:05am"/>
 
     <TextView
         android:id="@+id/duration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="180 minutes"/>
+        android:layout_toRightOf="@id/times"
+        android:layout_centerVertical="true"
+        android:textSize="16dp"
+        tools:text="3:00"/>
 
     <TextView
         android:id="@+id/busNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
+        android:layout_alignParentRight="true"
+        android:textSize="18dp"
         tools:text="#230"/>
 
-</LinearLayout>
+</RelativeLayout>
