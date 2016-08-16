@@ -23,7 +23,7 @@
         android:layout_toRightOf="@id/times"
         android:layout_centerVertical="true"
         android:textSize="16dp"
-        tools:text="3:00"/>
+        tools:text="30 min"/>
 
     <TextView
         android:id="@+id/busNumber"
