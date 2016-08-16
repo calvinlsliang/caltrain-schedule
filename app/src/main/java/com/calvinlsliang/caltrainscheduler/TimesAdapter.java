@@ -1,5 +1,6 @@
 package com.calvinlsliang.caltrainscheduler;
 
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,11 +10,12 @@ import android.widget.TextView;
 import com.caltrain.calvinlsliang.caltrainscheduler.R;
 import com.calvinlsliang.caltrainscheduler.model.TimesModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TimesAdapter extends RecyclerView.Adapter<TimesAdapter.ViewHolder> {
 
-    private List<TimesModel> timesModels;
+    private List<TimesModel> timesModels = new ArrayList<>();
 
     public TimesAdapter() {
     }
@@ -38,7 +40,11 @@ public class TimesAdapter extends RecyclerView.Adapter<TimesAdapter.ViewHolder> 
         return timesModels.size();
     }
 
-    public void setTimesList(List<TimesModel> timesModel) {
+    public void setTimesList(@Nullable List<TimesModel> timesModel) {
+        if (timesModel == null) {
+            return;
+        }
+
         this.timesModels = timesModel;
         notifyDataSetChanged();
     }
