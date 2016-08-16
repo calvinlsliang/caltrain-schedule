@@ -23,7 +23,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
     private Spinner spinnerEnd;
     private RecyclerView timesList;
     private TimesAdapter timesAdapter;
-    private SchedulePresenter presenter =  new SchedulePresenter();
+    private SchedulePresenter presenter = new SchedulePresenter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

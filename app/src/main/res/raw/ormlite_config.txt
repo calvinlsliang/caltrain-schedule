@@ -1,0 +1,26 @@
+#
+# generated on 2016/08/16 08:16:05
+#
+# --table-start--
+dataClass=com.calvinlsliang.caltrainscheduler.db.model.StopTimes
+tableName=StopTimes
+# --table-fields-start--
+# --field-start--
+fieldName=id
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=tripId
+columnName=trip_id
+# --field-end--
+# --field-start--
+fieldName=stopId
+columnName=stop_id
+# --field-end--
+# --field-start--
+fieldName=arrivalTime
+columnName=arrival_time
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
