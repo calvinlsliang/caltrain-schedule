@@ -15,11 +15,11 @@ public class SchedulePresenter {
 
     private ScheduleActivityView view;
 
-    protected void onCreate(ScheduleActivityView view) {
+    protected void onStart(ScheduleActivityView view) {
         this.view = view;
     }
 
-    protected void onDestroy() {
+    protected void onStop() {
         return;
     }
 
