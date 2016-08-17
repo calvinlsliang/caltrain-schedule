@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'ormgap'
 
 android {
     compileSdkVersion 23
@@ -19,9 +20,22 @@ android {
     }
 }
 
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "com.github.stephanenicolas.ormgap:ormgap-plugin:1.0.11"
+    }
+}
+
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.2.1'
     compile 'com.android.support:recyclerview-v7:23.3.0'
+    compile 'com.j256.ormlite:ormlite-core:5.0'
+    compile 'com.j256.ormlite:ormlite-android:5.0'
+    compile files('libs/jsefa-1.0.0.RELEASE.jar')
 }
