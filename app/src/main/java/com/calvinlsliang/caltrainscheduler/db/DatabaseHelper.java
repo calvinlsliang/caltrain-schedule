@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
 
-public class OrmLiteHelper extends OrmLiteSqliteOpenHelper {
+public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     private static final String DATABASE_NAME = "scheduler.db";
     private static final int DATABASE_VERSION = 1;
@@ -23,7 +23,7 @@ public class OrmLiteHelper extends OrmLiteSqliteOpenHelper {
     private Dao<StopTimes, Long> stopTimes = null;
     private Context context;
 
-    public OrmLiteHelper(Context context) {
+    public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION, R.raw.ormlite_config);
         this.context = context;
     }
@@ -69,21 +69,15 @@ public class OrmLiteHelper extends OrmLiteSqliteOpenHelper {
 
             while ((line = reader.readLine()) != null) {
                 String[] split = line.split(splitBy);
-                tripId = split[0];
-                arrivalTime = split[1];
-                stopId = split[3];
+                tripId = split[0];      // tripId
+                arrivalTime = split[1]; // arrivalTime
+                stopId = split[3];      // stopId
 
+                getDao().create(new StopTimes(tripId, arrivalTime, stopId));
             }
-
-
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-
     }
 
     public Dao<StopTimes, Long> getDao() throws SQLException {

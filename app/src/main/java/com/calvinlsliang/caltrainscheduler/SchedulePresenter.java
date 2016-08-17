@@ -17,6 +17,7 @@ public class SchedulePresenter {
 
     protected void onStart(ScheduleActivityView view) {
         this.view = view;
+        initSetTimes();
     }
 
     protected void onStop() {
@@ -40,13 +41,17 @@ public class SchedulePresenter {
         for (int trainIndex = 0; trainIndex < WeekdayConstants.NORTHBOUND[0].length; trainIndex++) {
             startTime = WeekdayConstants.NORTHBOUND[startPosition][trainIndex];
             endTime = WeekdayConstants.NORTHBOUND[endPosition][trainIndex];
-            busNumber = Constants.NORTHBOUND_TRAIN_IDS.get(trainIndex);
+            busNumber = Constants.WEEKDAY_NORTHBOUND_TRAIN_IDS.get(trainIndex);
 
             if (startTime != null && endTime != null && busNumber > 0) {
                 timesList.add(new TimesModel(startTime, endTime, busNumber));
             }
         }
         return timesList;
+    }
+
+    private void initSetTimes() {
+
     }
 
     private void initStubbedTimes() {
