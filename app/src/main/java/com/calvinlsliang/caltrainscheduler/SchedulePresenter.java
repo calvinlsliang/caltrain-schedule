@@ -14,7 +14,6 @@ public class SchedulePresenter {
 
     protected void onStart(ScheduleActivityView view) {
         this.view = view;
-        initSetTimes();
     }
 
     protected void onStop() {
@@ -43,22 +42,15 @@ public class SchedulePresenter {
 //            if (startTime != null && endTime != null && busNumber > 0) {
 //                timesList.add(new TimesModel(startTime, endTime, busNumber));
 //            }
+            busNumber = Constants.WEEKDAY_NORTHBOUND_TRAIN_IDS.get(trainIndex);
+            startTime = Constants.SCHEDULE.get(new StopTimesKey(busNumber, start));
+            endTime = Constants.SCHEDULE.get(new StopTimesKey(busNumber, end));
 
-            // fix initial population. put in int instead of strings?
-            // make sure the data in the table is consistent and only make it readable at the very end
-
-
-
-            startTime = Constants.SCHEDULE.get(new StopTimesKey(Constants.STOP_ID_MAP.get(start), Constants.TRIP_ID_MAP.get(Constants.WEEKDAY_NORTHBOUND_TRAIN_IDS.get(trainIndex))));
-
-
-
+            if (startTime != null && endTime != null) {
+                timesList.add(new TimesModel(startTime, endTime, busNumber));
+            }
         }
         return timesList;
-    }
-
-    private void initSetTimes() {
-
     }
 
     private void initStubbedTimes() {

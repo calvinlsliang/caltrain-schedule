@@ -2,16 +2,11 @@ package com.calvinlsliang.caltrainscheduler.db.model;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-
-import org.jsefa.csv.annotation.CsvDataType;
-import org.jsefa.csv.annotation.CsvField;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 @DatabaseTable(tableName = "StopTimes")
-@CsvDataType()
 public class StopTimes {
 
     private static final SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
@@ -22,23 +17,20 @@ public class StopTimes {
     private long id;
 
     @DatabaseField(columnName = "trip_id")
-    @CsvField(pos = 1)
-    public String tripId;
+    public int tripId;
 
     @DatabaseField(columnName = "arrival_time")
-    @CsvField(pos = 2)
     public String arrivalTime;
 
     @DatabaseField(columnName = "stop_id")
-    @CsvField(pos = 4)
-    public String stopId;
+    public String stopName;
 
     StopTimes() {
     }
 
-    public StopTimes(String tripId, String arrivalTime, String stopId) {
+    public StopTimes(int tripId, String arrivalTime, String stopName) {
         this.tripId = tripId;
-        this.stopId = stopId;
+        this.stopName = stopName;
 
         try {
             this.arrivalTime = dateFormat.format(format.parse(arrivalTime));

@@ -33,7 +33,7 @@ public class ScheduleApplication extends Application {
             final List<StopTimes> stopTimesList = stopTimesDao.queryForAll();
 
             for (StopTimes stopTime : stopTimesList) {
-                Constants.SCHEDULE.put(new StopTimesKey(stopTime.stopId, stopTime.tripId), stopTime.arrivalTime);
+                Constants.SCHEDULE.put(new StopTimesKey(stopTime.tripId, stopTime.stopName), stopTime.arrivalTime);
             }
         } catch(SQLException e) {
             e.printStackTrace();

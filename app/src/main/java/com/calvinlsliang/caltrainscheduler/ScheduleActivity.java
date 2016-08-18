@@ -24,7 +24,6 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
     private int endPosition = 0;
     private Spinner spinnerStart;
     private Spinner spinnerEnd;
-    private RecyclerView timesList;
     private TimesAdapter timesAdapter;
     private SchedulePresenter presenter = new SchedulePresenter();
 
@@ -105,7 +104,11 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
     }
 
     private void initTimesList() {
-        timesList = (RecyclerView) findViewById(R.id.times_list);
+        final RecyclerView timesList = (RecyclerView) findViewById(R.id.times_list);
+        if (timesList == null) {
+            return;
+        }
+
         timesList.setHasFixedSize(true);
         timesList.addItemDecoration(new TimesDividerItemDecoration(this));
         timesList.setLayoutManager(new LinearLayoutManager(this));

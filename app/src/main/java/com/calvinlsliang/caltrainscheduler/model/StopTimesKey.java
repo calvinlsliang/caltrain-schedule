@@ -3,13 +3,12 @@ package com.calvinlsliang.caltrainscheduler.model;
 
 public class StopTimesKey {
 
-    private final String tripId;
+    private final int tripId;
+    private final String stopName;
 
-    private final String stopId;
-
-    public StopTimesKey(String stopId, String tripId) {
-        this.stopId = stopId;
+    public StopTimesKey(int tripId, String stopName) {
         this.tripId = tripId;
+        this.stopName = stopName;
     }
 
     @Override
@@ -18,11 +17,11 @@ public class StopTimesKey {
         if (!(o instanceof StopTimesKey)) return false;
 
         StopTimesKey key = (StopTimesKey) o;
-        return this.tripId == key.tripId && this.stopId == key.stopId;
+        return this.tripId == key.tripId && this.stopName == key.stopName;
     }
 
     @Override
     public int hashCode() {
-        return 31 * tripId.hashCode() + stopId.hashCode();
+        return 31 * tripId + stopName.hashCode();
     }
 }

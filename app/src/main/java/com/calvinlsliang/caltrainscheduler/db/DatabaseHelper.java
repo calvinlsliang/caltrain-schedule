@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.caltrain.calvinlsliang.caltrainscheduler.R;
 import com.calvinlsliang.caltrainscheduler.db.model.StopTimes;
+import com.calvinlsliang.caltrainscheduler.util.Constants;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
@@ -55,13 +56,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
         // trip_id,arrival_time,departure_time,stop_id,stop_sequence,pickup_type,drop_off_type
 
-        // TODO remove JSefa if this works
-
         final String splitBy = ",";
         String line;
-        String tripId;
+        int tripId;
         String arrivalTime;
-        String stopId;
+        String stopName;
 
         try {
             final InputStreamReader is = new InputStreamReader(context.getAssets().open("stop_times.txt"));
@@ -69,12 +68,14 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
             while ((line = reader.readLine()) != null) {
                 String[] split = line.split(splitBy);
-                tripId = split[0];      // tripId
-                arrivalTime = split[1]; // arrivalTime
-                stopId = split[3];      // stopId
+                tripId = Constants.TRIP_ID_MAP.get(split[0]);       // tripId
+                arrivalTime = split[1];                             // arrivalTime
+                stopName = Constants.STOP_ID_MAP2.get(split[3]);    // stopId
 
-                getDao().create(new StopTimes(tripId, arrivalTime, stopId));
+                getDao().create(new StopTimes(tripId, arrivalTime, stopName));
             }
+
+            is.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
