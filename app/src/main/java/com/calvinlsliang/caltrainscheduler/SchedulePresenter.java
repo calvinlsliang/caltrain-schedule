@@ -1,15 +1,12 @@
 package com.calvinlsliang.caltrainscheduler;
 
+import com.calvinlsliang.caltrainscheduler.model.StopTimesKey;
 import com.calvinlsliang.caltrainscheduler.model.TimesModel;
 import com.calvinlsliang.caltrainscheduler.util.Constants;
 import com.calvinlsliang.caltrainscheduler.util.WeekdayConstants;
 
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Created by calvin on 8/6/16.
- */
 
 public class SchedulePresenter {
 
@@ -24,14 +21,14 @@ public class SchedulePresenter {
         return;
     }
 
-    protected void handleNewTimes(int startPosition, int endPosition) {
-        view.setTimesList(getNewTimes(startPosition, endPosition));
+    protected void handleNewTimes(String start, String end) {
+        view.setTimesList(getNewTimes(start, end));
     }
 
-    private List<TimesModel> getNewTimes(int startPosition, int endPosition) {
-        if (startPosition >= endPosition) {
-            return new ArrayList<>();
-        }
+    private List<TimesModel> getNewTimes(String start, String end) {
+//        if (startPosition >= endPosition) {
+//            return new ArrayList<>();
+//        }
 
         List<TimesModel> timesList = new ArrayList<>();
         String startTime;
@@ -39,13 +36,23 @@ public class SchedulePresenter {
         int busNumber;
 
         for (int trainIndex = 0; trainIndex < WeekdayConstants.NORTHBOUND[0].length; trainIndex++) {
-            startTime = WeekdayConstants.NORTHBOUND[startPosition][trainIndex];
-            endTime = WeekdayConstants.NORTHBOUND[endPosition][trainIndex];
-            busNumber = Constants.WEEKDAY_NORTHBOUND_TRAIN_IDS.get(trainIndex);
+//            startTime = WeekdayConstants.NORTHBOUND[startPosition][trainIndex];
+//            endTime = WeekdayConstants.NORTHBOUND[endPosition][trainIndex];
+//            busNumber = Constants.WEEKDAY_NORTHBOUND_TRAIN_IDS.get(trainIndex);
+//
+//            if (startTime != null && endTime != null && busNumber > 0) {
+//                timesList.add(new TimesModel(startTime, endTime, busNumber));
+//            }
 
-            if (startTime != null && endTime != null && busNumber > 0) {
-                timesList.add(new TimesModel(startTime, endTime, busNumber));
-            }
+            // fix initial population. put in int instead of strings?
+            // make sure the data in the table is consistent and only make it readable at the very end
+
+
+
+            startTime = Constants.SCHEDULE.get(new StopTimesKey(Constants.STOP_ID_MAP.get(start), Constants.TRIP_ID_MAP.get(Constants.WEEKDAY_NORTHBOUND_TRAIN_IDS.get(trainIndex))));
+
+
+
         }
         return timesList;
     }

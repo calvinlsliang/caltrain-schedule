@@ -7,7 +7,6 @@ import org.jsefa.csv.annotation.CsvDataType;
 import org.jsefa.csv.annotation.CsvField;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
@@ -24,15 +23,15 @@ public class StopTimes {
 
     @DatabaseField(columnName = "trip_id")
     @CsvField(pos = 1)
-    private String tripId;
+    public String tripId;
 
     @DatabaseField(columnName = "arrival_time")
     @CsvField(pos = 2)
-    private String arrivalTime;
+    public String arrivalTime;
 
     @DatabaseField(columnName = "stop_id")
     @CsvField(pos = 4)
-    private String stopId;
+    public String stopId;
 
     StopTimes() {
     }

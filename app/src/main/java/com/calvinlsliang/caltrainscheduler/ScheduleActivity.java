@@ -17,6 +17,9 @@ import java.util.List;
 
 public class ScheduleActivity extends AppCompatActivity implements ScheduleActivityView {
 
+    private String start;
+    private String end;
+
     private int startPosition = 0;
     private int endPosition = 0;
     private Spinner spinnerStart;
@@ -74,8 +77,8 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0) {
-                    startPosition = position;
-                    presenter.handleNewTimes(startPosition, endPosition);
+                    start = spinnerStart.getSelectedItem().toString();
+                    presenter.handleNewTimes(start, end);
                 }
             }
 
@@ -89,8 +92,8 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0) {
-                    endPosition = position;
-                    presenter.handleNewTimes(startPosition, endPosition);
+                    end = spinnerEnd.getSelectedItem().toString();
+                    presenter.handleNewTimes(start, end);
                 }
             }
 
