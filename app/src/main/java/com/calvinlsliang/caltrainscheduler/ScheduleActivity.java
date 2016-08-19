@@ -17,11 +17,13 @@ import java.util.List;
 
 public class ScheduleActivity extends AppCompatActivity implements ScheduleActivityView {
 
+    private String start;
+    private String end;
+
     private int startPosition = 0;
     private int endPosition = 0;
     private Spinner spinnerStart;
     private Spinner spinnerEnd;
-    private RecyclerView timesList;
     private TimesAdapter timesAdapter;
     private SchedulePresenter presenter = new SchedulePresenter();
 
@@ -55,7 +57,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
         spinnerStart = (Spinner) findViewById(R.id.spinnerStart);
         spinnerEnd = (Spinner) findViewById(R.id.spinnerEnd);
 
-        List<String> spinnerArray = Constants.NORTHBOUND_DESTINATIONS;
+        List<String> spinnerArray = Constants.DESTINATIONS;
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -73,10 +75,9 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
         spinnerStart.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position > 0) {
-                    startPosition = position;
-                    presenter.handleNewTimes(startPosition, endPosition);
-                }
+                start = spinnerStart.getSelectedItem().toString();
+                startPosition = position;
+                presenter.handleNewTimes(startPosition, endPosition);
             }
 
             @Override
@@ -88,10 +89,9 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
         spinnerEnd.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position > 0) {
-                    endPosition = position;
-                    presenter.handleNewTimes(startPosition, endPosition);
-                }
+                end = spinnerEnd.getSelectedItem().toString();
+                endPosition = position;
+                presenter.handleNewTimes(startPosition, endPosition);
             }
 
             @Override
@@ -102,7 +102,11 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
     }
 
     private void initTimesList() {
-        timesList = (RecyclerView) findViewById(R.id.times_list);
+        final RecyclerView timesList = (RecyclerView) findViewById(R.id.times_list);
+        if (timesList == null) {
+            return;
+        }
+
         timesList.setHasFixedSize(true);
         timesList.addItemDecoration(new TimesDividerItemDecoration(this));
         timesList.setLayoutManager(new LinearLayoutManager(this));

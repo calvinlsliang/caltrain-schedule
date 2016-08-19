@@ -3,10 +3,6 @@ package com.calvinlsliang.caltrainscheduler.util;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created by calvin on 8/13/16.
- */
-
 public class WeekdayConstants {
 
     public static final String[][] NORTHBOUND = {
