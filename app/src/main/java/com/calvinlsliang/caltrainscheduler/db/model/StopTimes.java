@@ -16,13 +16,13 @@ public class StopTimes {
     @DatabaseField(generatedId = true)
     private long id;
 
-    @DatabaseField(columnName = "trip_id")
+    @DatabaseField
     public int tripId;
 
-    @DatabaseField(columnName = "arrival_time")
+    @DatabaseField
     public String arrivalTime;
 
-    @DatabaseField(columnName = "stop_id")
+    @DatabaseField
     public String stopName;
 
     StopTimes() {

@@ -8,15 +8,12 @@ generatedId=true
 # --field-end--
 # --field-start--
 fieldName=tripId
-columnName=trip_id
 # --field-end--
 # --field-start--
 fieldName=arrivalTime
-columnName=arrival_time
 # --field-end--
 # --field-start--
-fieldName=stopId
-columnName=stop_id
+fieldName=stopName
 # --field-end--
 # --table-fields-end--
 # --table-end--

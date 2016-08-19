@@ -57,7 +57,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
         spinnerStart = (Spinner) findViewById(R.id.spinnerStart);
         spinnerEnd = (Spinner) findViewById(R.id.spinnerEnd);
 
-        List<String> spinnerArray = Constants.NORTHBOUND_DESTINATIONS;
+        List<String> spinnerArray = Constants.DESTINATIONS;
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -75,10 +75,9 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
         spinnerStart.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position > 0) {
-                    start = spinnerStart.getSelectedItem().toString();
-                    presenter.handleNewTimes(start, end);
-                }
+                start = spinnerStart.getSelectedItem().toString();
+                startPosition = position;
+                presenter.handleNewTimes(startPosition, endPosition);
             }
 
             @Override
@@ -90,10 +89,9 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
         spinnerEnd.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position > 0) {
-                    end = spinnerEnd.getSelectedItem().toString();
-                    presenter.handleNewTimes(start, end);
-                }
+                end = spinnerEnd.getSelectedItem().toString();
+                endPosition = position;
+                presenter.handleNewTimes(startPosition, endPosition);
             }
 
             @Override

@@ -17,7 +17,7 @@ public class StopTimesKey {
         if (!(o instanceof StopTimesKey)) return false;
 
         StopTimesKey key = (StopTimesKey) o;
-        return this.tripId == key.tripId && this.stopName == key.stopName;
+        return this.tripId == key.tripId && this.stopName.equals(key.stopName);
     }
 
     @Override
