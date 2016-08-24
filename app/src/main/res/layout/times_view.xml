@@ -14,14 +14,13 @@
         android:paddingRight="24dp"
         android:textSize="18dp"
         android:textStyle="bold"
-        tools:text="8:05am - 11:05am"/>
+        tools:text="8:05am - 9:05am"/>
 
     <TextView
         android:id="@+id/duration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@+id/busNumber"
-        android:layout_centerVertical="true"
         android:paddingRight="24dp"
         android:textSize="16dp"
         tools:text="30 min"/>
@@ -33,5 +32,15 @@
         android:layout_alignParentRight="true"
         android:textSize="18dp"
         tools:text="#230"/>
+
+    <TextView
+        android:id="@+id/transfer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/times"
+        android:visibility="gone"
+        android:paddingTop="8dp"
+        tools:text="Transfer at San Carlos at 8:21am"
+        tools:visibility="visible"/>
 
 </RelativeLayout>

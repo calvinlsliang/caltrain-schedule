@@ -1,6 +1,9 @@
 package com.calvinlsliang.caltrainscheduler.util;
 
+import android.util.SparseArray;
+
 import com.calvinlsliang.caltrainscheduler.model.StopTimesKey;
+import com.calvinlsliang.caltrainscheduler.model.TransferModel;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -11,10 +14,6 @@ public class Constants {
 
     public static final List<String> DESTINATIONS = Arrays.asList(
             "San Francisco", "22nd St", "Bayshore", "So. San Francisco", "San Bruno", "Millbrae", "Broadway", "Burlingame", "San Mateo", "Hayward Park", "Hillsdale", "Belmont", "San Carlos", "Redwood City", "Atherton", "Menlo Park", "Palo Alto", "California Ave", "San Antonio", "Mt View", "Sunnyvale", "Lawrence", "Santa Clara", "College Park", "San Jose Diridon", "Tamien", "Capitol", "Blossom Hill", "Morgan Hill", "San Martin", "Gilroy", "San Jose"
-    );
-
-    public static final List<String> NORTHBOUND_DESTINATIONS = Arrays.asList(
-            "Gilroy", "San Martin", "Morgan Hill", "Blossom Hill", "Capitol", "Tamien", "San Jose Diridon", "College Park", "Santa Clara", "Lawrence", "Sunnyvale", "Mountain View", "San Antonio", "California Ave", "Palo Alto", "Menlo Park", "Redwood City", "San Carlos", "Belmont", "Hillsdale", "Hayward Park", "San Mateo", "Burlingame", "Millbrae", "San Bruno", "So. San Francisco", "Bayshore", "22nd Street", "San Francisco"
     );
 
     public static final List<Integer> WEEKDAY_NORTHBOUND_TRAIN_IDS = Arrays.asList(
@@ -35,142 +34,73 @@ public class Constants {
 
     public static final HashMap<StopTimesKey, String> SCHEDULE = new HashMap<>();
 
-    public static final Map<String, String> STOP_ID_MAP2;
-    static {
-        STOP_ID_MAP2 = new HashMap<>();
-        STOP_ID_MAP2.put("70011", "San Francisco");
-        STOP_ID_MAP2.put("70012", "San Francisco");
-        STOP_ID_MAP2.put("70021", "22nd St");
-        STOP_ID_MAP2.put("70022", "22nd St");
-        STOP_ID_MAP2.put("70031", "Bayshore");
-        STOP_ID_MAP2.put("70032", "Bayshore");
-        STOP_ID_MAP2.put("70041", "So. San Francisco");
-        STOP_ID_MAP2.put("70042", "So. San Francisco");
-        STOP_ID_MAP2.put("70051", "San Bruno");
-        STOP_ID_MAP2.put("70052", "San Bruno");
-        STOP_ID_MAP2.put("70061", "Millbrae");
-        STOP_ID_MAP2.put("70062", "Millbrae");
-        STOP_ID_MAP2.put("70071", "Broadway");
-        STOP_ID_MAP2.put("70072", "Broadway");
-        STOP_ID_MAP2.put("70081", "Burlingame");
-        STOP_ID_MAP2.put("70082", "Burlingame");
-        STOP_ID_MAP2.put("70091", "San Mateo");
-        STOP_ID_MAP2.put("70092", "San Mateo");
-        STOP_ID_MAP2.put("70101", "Hayward Park");
-        STOP_ID_MAP2.put("70102", "Hayward Park");
-        STOP_ID_MAP2.put("70111", "Hillsdale");
-        STOP_ID_MAP2.put("70112", "Hillsdale");
-        STOP_ID_MAP2.put("70121", "Belmont");
-        STOP_ID_MAP2.put("70122", "Belmont");
-        STOP_ID_MAP2.put("70131", "San Carlos");
-        STOP_ID_MAP2.put("70132", "San Carlos");
-        STOP_ID_MAP2.put("70141", "Redwood City");
-        STOP_ID_MAP2.put("70142", "Redwood City");
-        STOP_ID_MAP2.put("70151", "Atherton");
-        STOP_ID_MAP2.put("70152", "Atherton");
-        STOP_ID_MAP2.put("70161", "Menlo Park");
-        STOP_ID_MAP2.put("70162", "Menlo Park");
-        STOP_ID_MAP2.put("70171", "Palo Alto");
-        STOP_ID_MAP2.put("70172", "Palo Alto");
-        STOP_ID_MAP2.put("70191", "California Ave");
-        STOP_ID_MAP2.put("70192", "California Ave");
-        STOP_ID_MAP2.put("70201", "San Antonio");
-        STOP_ID_MAP2.put("70202", "San Antonio");
-        STOP_ID_MAP2.put("70211", "Mt View");
-        STOP_ID_MAP2.put("70212", "Mt View");
-        STOP_ID_MAP2.put("70221", "Sunnyvale");
-        STOP_ID_MAP2.put("70222", "Sunnyvale");
-        STOP_ID_MAP2.put("70231", "Lawrence");
-        STOP_ID_MAP2.put("70232", "Lawrence");
-        STOP_ID_MAP2.put("70241", "Santa Clara");
-        STOP_ID_MAP2.put("70242", "Santa Clara");
-        STOP_ID_MAP2.put("70251", "College Park");
-        STOP_ID_MAP2.put("70252", "College Park");
-        STOP_ID_MAP2.put("70261", "San Jose Diridon");
-        STOP_ID_MAP2.put("70262", "San Jose Diridon");
-        STOP_ID_MAP2.put("70271", "Tamien");
-        STOP_ID_MAP2.put("70272", "Tamien");
-        STOP_ID_MAP2.put("70281", "Capitol");
-        STOP_ID_MAP2.put("70282", "Capitol");
-        STOP_ID_MAP2.put("70291", "Blossom Hill");
-        STOP_ID_MAP2.put("70292", "Blossom Hill");
-        STOP_ID_MAP2.put("70301", "Morgan Hill");
-        STOP_ID_MAP2.put("70302", "Morgan Hill");
-        STOP_ID_MAP2.put("70311", "San Martin");
-        STOP_ID_MAP2.put("70312", "San Martin");
-        STOP_ID_MAP2.put("70321", "Gilroy");
-        STOP_ID_MAP2.put("70322", "Gilroy");
-        STOP_ID_MAP2.put("777402", "San Jose");
-        STOP_ID_MAP2.put("777403", "Tamien");
-    }
-
-    public static final Map<String, Integer> STOP_ID_MAP;
+    public static final Map<String, String> STOP_ID_MAP;
     static {
         STOP_ID_MAP = new HashMap<>();
-        STOP_ID_MAP.put("San Francisco", 70011);
-        STOP_ID_MAP.put("San Francisco", 70012);
-        STOP_ID_MAP.put("22nd St", 70021);
-        STOP_ID_MAP.put("22nd St", 70022);
-        STOP_ID_MAP.put("Bayshore", 70031);
-        STOP_ID_MAP.put("Bayshore", 70032);
-        STOP_ID_MAP.put("So. San Francisco", 70041);
-        STOP_ID_MAP.put("So. San Francisco", 70042);
-        STOP_ID_MAP.put("San Bruno", 70051);
-        STOP_ID_MAP.put("San Bruno", 70052);
-        STOP_ID_MAP.put("Millbrae", 70061);
-        STOP_ID_MAP.put("Millbrae", 70062);
-        STOP_ID_MAP.put("Broadway", 70071);
-        STOP_ID_MAP.put("Broadway", 70072);
-        STOP_ID_MAP.put("Burlingame", 70081);
-        STOP_ID_MAP.put("Burlingame", 70082);
-        STOP_ID_MAP.put("San Mateo", 70091);
-        STOP_ID_MAP.put("San Mateo", 70092);
-        STOP_ID_MAP.put("Hayward Park", 70101);
-        STOP_ID_MAP.put("Hayward Park", 70102);
-        STOP_ID_MAP.put("Hillsdale", 70111);
-        STOP_ID_MAP.put("Hillsdale", 70112);
-        STOP_ID_MAP.put("Belmont", 70121);
-        STOP_ID_MAP.put("Belmont", 70122);
-        STOP_ID_MAP.put("San Carlos", 70131);
-        STOP_ID_MAP.put("San Carlos", 70132);
-        STOP_ID_MAP.put("Redwood City", 70141);
-        STOP_ID_MAP.put("Redwood City", 70142);
-        STOP_ID_MAP.put("Atherton", 70151);
-        STOP_ID_MAP.put("Atherton", 70152);
-        STOP_ID_MAP.put("Menlo Park", 70161);
-        STOP_ID_MAP.put("Menlo Park", 70162);
-        STOP_ID_MAP.put("Palo Alto", 70171);
-        STOP_ID_MAP.put("Palo Alto", 70172);
-        STOP_ID_MAP.put("California Ave", 70191);
-        STOP_ID_MAP.put("California Ave", 70192);
-        STOP_ID_MAP.put("San Antonio", 70201);
-        STOP_ID_MAP.put("San Antonio", 70202);
-        STOP_ID_MAP.put("Mt View", 70211);
-        STOP_ID_MAP.put("Mt View", 70212);
-        STOP_ID_MAP.put("Sunnyvale", 70221);
-        STOP_ID_MAP.put("Sunnyvale", 70222);
-        STOP_ID_MAP.put("Lawrence", 70231);
-        STOP_ID_MAP.put("Lawrence", 70232);
-        STOP_ID_MAP.put("Santa Clara", 70241);
-        STOP_ID_MAP.put("Santa Clara", 70242);
-        STOP_ID_MAP.put("College Park", 70251);
-        STOP_ID_MAP.put("College Park", 70252);
-        STOP_ID_MAP.put("San Jose Diridon", 70261);
-        STOP_ID_MAP.put("San Jose Diridon", 70262);
-        STOP_ID_MAP.put("Tamien", 70271);
-        STOP_ID_MAP.put("Tamien", 70272);
-        STOP_ID_MAP.put("Capitol", 70281);
-        STOP_ID_MAP.put("Capitol", 70282);
-        STOP_ID_MAP.put("Blossom Hill", 70291);
-        STOP_ID_MAP.put("Blossom Hill", 70292);
-        STOP_ID_MAP.put("Morgan Hill", 70301);
-        STOP_ID_MAP.put("Morgan Hill", 70302);
-        STOP_ID_MAP.put("San Martin", 70311);
-        STOP_ID_MAP.put("San Martin", 70312);
-        STOP_ID_MAP.put("Gilroy", 70321);
-        STOP_ID_MAP.put("Gilroy", 70322);
-        STOP_ID_MAP.put("San Jose", 777402);
-        STOP_ID_MAP.put("Tamien", 777403);
+        STOP_ID_MAP.put("70011", "San Francisco");
+        STOP_ID_MAP.put("70012", "San Francisco");
+        STOP_ID_MAP.put("70021", "22nd St");
+        STOP_ID_MAP.put("70022", "22nd St");
+        STOP_ID_MAP.put("70031", "Bayshore");
+        STOP_ID_MAP.put("70032", "Bayshore");
+        STOP_ID_MAP.put("70041", "So. San Francisco");
+        STOP_ID_MAP.put("70042", "So. San Francisco");
+        STOP_ID_MAP.put("70051", "San Bruno");
+        STOP_ID_MAP.put("70052", "San Bruno");
+        STOP_ID_MAP.put("70061", "Millbrae");
+        STOP_ID_MAP.put("70062", "Millbrae");
+        STOP_ID_MAP.put("70071", "Broadway");
+        STOP_ID_MAP.put("70072", "Broadway");
+        STOP_ID_MAP.put("70081", "Burlingame");
+        STOP_ID_MAP.put("70082", "Burlingame");
+        STOP_ID_MAP.put("70091", "San Mateo");
+        STOP_ID_MAP.put("70092", "San Mateo");
+        STOP_ID_MAP.put("70101", "Hayward Park");
+        STOP_ID_MAP.put("70102", "Hayward Park");
+        STOP_ID_MAP.put("70111", "Hillsdale");
+        STOP_ID_MAP.put("70112", "Hillsdale");
+        STOP_ID_MAP.put("70121", "Belmont");
+        STOP_ID_MAP.put("70122", "Belmont");
+        STOP_ID_MAP.put("70131", "San Carlos");
+        STOP_ID_MAP.put("70132", "San Carlos");
+        STOP_ID_MAP.put("70141", "Redwood City");
+        STOP_ID_MAP.put("70142", "Redwood City");
+        STOP_ID_MAP.put("70151", "Atherton");
+        STOP_ID_MAP.put("70152", "Atherton");
+        STOP_ID_MAP.put("70161", "Menlo Park");
+        STOP_ID_MAP.put("70162", "Menlo Park");
+        STOP_ID_MAP.put("70171", "Palo Alto");
+        STOP_ID_MAP.put("70172", "Palo Alto");
+        STOP_ID_MAP.put("70191", "California Ave");
+        STOP_ID_MAP.put("70192", "California Ave");
+        STOP_ID_MAP.put("70201", "San Antonio");
+        STOP_ID_MAP.put("70202", "San Antonio");
+        STOP_ID_MAP.put("70211", "Mt View");
+        STOP_ID_MAP.put("70212", "Mt View");
+        STOP_ID_MAP.put("70221", "Sunnyvale");
+        STOP_ID_MAP.put("70222", "Sunnyvale");
+        STOP_ID_MAP.put("70231", "Lawrence");
+        STOP_ID_MAP.put("70232", "Lawrence");
+        STOP_ID_MAP.put("70241", "Santa Clara");
+        STOP_ID_MAP.put("70242", "Santa Clara");
+        STOP_ID_MAP.put("70251", "College Park");
+        STOP_ID_MAP.put("70252", "College Park");
+        STOP_ID_MAP.put("70261", "San Jose Diridon");
+        STOP_ID_MAP.put("70262", "San Jose Diridon");
+        STOP_ID_MAP.put("70271", "Tamien");
+        STOP_ID_MAP.put("70272", "Tamien");
+        STOP_ID_MAP.put("70281", "Capitol");
+        STOP_ID_MAP.put("70282", "Capitol");
+        STOP_ID_MAP.put("70291", "Blossom Hill");
+        STOP_ID_MAP.put("70292", "Blossom Hill");
+        STOP_ID_MAP.put("70301", "Morgan Hill");
+        STOP_ID_MAP.put("70302", "Morgan Hill");
+        STOP_ID_MAP.put("70311", "San Martin");
+        STOP_ID_MAP.put("70312", "San Martin");
+        STOP_ID_MAP.put("70321", "Gilroy");
+        STOP_ID_MAP.put("70322", "Gilroy");
+        STOP_ID_MAP.put("777402", "San Jose");
+        STOP_ID_MAP.put("777403", "Tamien");
     }
 
     public static final Map<String, Integer> TRIP_ID_MAP;
@@ -396,41 +326,21 @@ public class Constants {
         TRIP_ID_MAP.put("198", 198);
     }
 
-
-//    public static final String[][] WEEKDAY_NORTHBOUND_SCHEDULE = new String[WEEKDAY_NORTHBOUND_TRAIN_IDS.size()][]
-
-    // need set of (north/south) * (weekend/weekday) train ids
-    // need hashmap k: readable name of stop_id, v: int of stop_id
-    // need hashmap k: readable name of trip_id v: string of trip_id
-
-    /*
-
-    initialize four (north/south)*(weekday/weekend) arrays.
-
-    north weekday
-    height: stop_id
-    width: northbound_weekday trip_ids
-
-    north weekend
-
-    south weekday
-
-    south weekend
-
-    populating
-    -------------------
-    for each row in stop_times:
-
-        find which of the four (north/south)*(weekday/weekend) table the trip_id belongs to.
-
-        if row matches the stop_id of array:
-            add that time in the index
-
-    to read
-    -------------------
-
-
-
-     */
+    public static final SparseArray<TransferModel> TRANSFERS;
+    static {
+        TRANSFERS = new SparseArray<>();
+        TRANSFERS.put(207, new TransferModel(211, "Menlo Park", "6:42 AM"));
+        TRANSFERS.put(217, new TransferModel(221, "Menlo Park", "7:42 AM"));
+        TRANSFERS.put(227, new TransferModel(231, "Menlo Park", "8:45 AM"));
+        TRANSFERS.put(261, new TransferModel(263, "Redwood City", "4:27 PM"));
+        TRANSFERS.put(269, new TransferModel(273, "Redwood City", "5:29 PM"));
+        TRANSFERS.put(279, new TransferModel(283, "Redwood City", "6:29 PM"));
+        TRANSFERS.put(208, new TransferModel(210, "San Carlos", "7:11 AM"));
+        TRANSFERS.put(218, new TransferModel(220, "San Carlos", "8:11 AM"));
+        TRANSFERS.put(228, new TransferModel(230, "San Carlos", "9:11 AM"));
+        TRANSFERS.put(264, new TransferModel(268, "Redwood City", "5:24 PM"));
+        TRANSFERS.put(274, new TransferModel(278, "Redwood City", "6:24 PM"));
+        TRANSFERS.put(284, new TransferModel(288, "Redwood City", "7:24 PM"));
+    }
 
 }

@@ -19,7 +19,7 @@ import java.sql.SQLException;
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     private static final String DATABASE_NAME = "scheduler.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     private Dao<StopTimes, Long> stopTimes = null;
     private Context context;
@@ -44,11 +44,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         try {
             TableUtils.dropTable(connectionSource, StopTimes.class, false);
             onCreate(database, connectionSource);
-            populateStopTimes();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     // Populate db with static data from CSV
@@ -70,7 +68,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
                 String[] split = line.split(splitBy);
                 tripId = Constants.TRIP_ID_MAP.get(split[0]);       // tripId
                 arrivalTime = split[1];                             // arrivalTime
-                stopName = Constants.STOP_ID_MAP2.get(split[3]);    // stopName
+                stopName = Constants.STOP_ID_MAP.get(split[3]);     // stopName
 
                 getDao().create(new StopTimes(tripId, arrivalTime, stopName));
             }

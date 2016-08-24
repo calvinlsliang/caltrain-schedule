@@ -2,13 +2,16 @@ package com.calvinlsliang.caltrainscheduler;
 
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.caltrain.calvinlsliang.caltrainscheduler.R;
 import com.calvinlsliang.caltrainscheduler.model.TimesModel;
@@ -24,13 +27,20 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
     private Spinner spinnerStart;
     private Spinner spinnerEnd;
     private Spinner actionbarSpinnerDays;
+    private ImageView swap;
     private TimesAdapter timesAdapter;
     private SchedulePresenter presenter = new SchedulePresenter();
+
+    private TextView noAvailableTrains;
+    private RecyclerView timesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
+
+        noAvailableTrains = (TextView) findViewById(R.id.no_trains);
+        timesList = (RecyclerView) findViewById(R.id.times_list);
 
         initActionBar();
         initSpinner();
@@ -44,8 +54,24 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
     }
 
     @Override
-    public void setTimesList(List<TimesModel> timesModels) {
+    public void setTimesList(@Nullable List<TimesModel> timesModels) {
+        if (timesModels == null) {
+            showNoAvailableTrainsMessage();
+        } else {
+            hideNoAvailableTrainsMessage();
+        }
+
         timesAdapter.setTimesList(timesModels);
+    }
+
+    private void showNoAvailableTrainsMessage() {
+        noAvailableTrains.setVisibility(View.VISIBLE);
+        timesList.setVisibility(View.GONE);
+    }
+
+    private void hideNoAvailableTrainsMessage() {
+        noAvailableTrains.setVisibility(View.GONE);
+        timesList.setVisibility(View.VISIBLE);
     }
 
     private void initActionBar() {
@@ -59,8 +85,45 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
         actionbarSpinnerDays.getBackground().setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
         actionbarSpinnerDays.setAdapter(adapter);
 
+        swap = (ImageView) view.findViewById(R.id.actionbar_swap);
+        swap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int tempPosition = startPosition;
+                startPosition = endPosition;
+                endPosition = tempPosition;
+
+                spinnerStart.setOnItemSelectedListener(null);
+                spinnerEnd.setOnItemSelectedListener(null);
+
+                spinnerStart.setSelection(startPosition);
+                spinnerEnd.setSelection(endPosition);
+
+                initStationSpinnerListener();
+
+                presenter.handleNewTimes(startPosition, endPosition);
+            }
+        });
+
         actionBar.setCustomView(view);
         actionBar.setDisplayShowCustomEnabled(true);
+
+        initActionBarSpinnerListener();
+    }
+
+    private void initActionBarSpinnerListener() {
+        actionbarSpinnerDays.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                dayPosition = position;
+                presenter.handleNewDayRange(dayPosition);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private void initSpinner() {
@@ -77,24 +140,10 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerEnd.setAdapter(adapter2);
 
-        initSpinnerListener();
+        initStationSpinnerListener();
     }
 
-    private void initSpinnerListener() {
-
-        actionbarSpinnerDays.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                dayPosition = position;
-                presenter.handleNewDayRange(dayPosition);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
+    private void initStationSpinnerListener() {
         spinnerStart.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

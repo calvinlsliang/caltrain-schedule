@@ -13,6 +13,6 @@ public class DatabaseConfigUtil extends OrmLiteConfigUtil {
     };
 
     public static void main(String[] args) throws SQLException, IOException {
-        writeConfigFile(new File("/Users/cliang/work/caltrain-scheduler/app/src/main/res/raw/ormlite_config.txt"), classes);
+        writeConfigFile(new File("app/src/main/res/raw/ormlite_config.txt"), classes);
     }
 }

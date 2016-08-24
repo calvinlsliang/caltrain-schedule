@@ -2,6 +2,7 @@ package com.calvinlsliang.caltrainscheduler;
 
 import com.calvinlsliang.caltrainscheduler.model.StopTimesKey;
 import com.calvinlsliang.caltrainscheduler.model.TimesModel;
+import com.calvinlsliang.caltrainscheduler.model.TransferModel;
 import com.calvinlsliang.caltrainscheduler.util.Constants;
 
 import java.util.ArrayList;
@@ -31,11 +32,14 @@ public class SchedulePresenter {
 
     private List<TimesModel> getNewTimes() {
         if (departureStation == arrivalStation) {
-            return new ArrayList<>();
+            return null;
         }
 
         List<Integer> trainStations = getTrainStation(departureStation, arrivalStation);
         List<TimesModel> timesList = new ArrayList<>();
+
+        TransferModel transferModel = null;
+        TimesModel timesModel;
         String startTime;
         String endTime;
         int busNumber;
@@ -45,8 +49,22 @@ public class SchedulePresenter {
             startTime = Constants.SCHEDULE.get(new StopTimesKey(busNumber, Constants.DESTINATIONS.get(departureStation)));
             endTime = Constants.SCHEDULE.get(new StopTimesKey(busNumber, Constants.DESTINATIONS.get(arrivalStation)));
 
+            if (endTime == null) {
+                transferModel = Constants.TRANSFERS.get(busNumber);
+
+                if (transferModel != null) {
+                    endTime = checkTransfers(transferModel.bus);
+                }
+            }
+
             if (startTime != null && endTime != null) {
-                timesList.add(new TimesModel(startTime, endTime, busNumber));
+                timesModel = new TimesModel(startTime, endTime, busNumber);
+                if (transferModel != null) {
+                    timesModel.setTransferLocation(transferModel.location);
+                    timesModel.setTransferTime(transferModel.time);
+                }
+
+                timesList.add(timesModel);
             }
         }
         return timesList;
@@ -67,5 +85,9 @@ public class SchedulePresenter {
                 return Constants.WEEKDAY_SOUTHBOUND_TRAIN_IDS;
             }
         }
+    }
+
+    private String checkTransfers(int busNumber) {
+         return Constants.SCHEDULE.get(new StopTimesKey(busNumber, Constants.DESTINATIONS.get(arrivalStation)));
     }
 }
