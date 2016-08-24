@@ -11,25 +11,30 @@ public class SchedulePresenter {
 
     private ScheduleActivityView view;
     private boolean isWeekend;
+    private int departureStation = 0;
+    private int arrivalStation = 0;
 
     protected void onStart(ScheduleActivityView view) {
         this.view = view;
     }
 
-    protected void onStop() {
-        return;
+    protected void handleNewDayRange(int dayPosition) {
+        isWeekend = dayPosition == 1;
+        view.setTimesList(getNewTimes());
     }
 
     protected void handleNewTimes(int startPosition, int endPosition) {
-        view.setTimesList(getNewTimes(startPosition, endPosition));
+        departureStation = startPosition;
+        arrivalStation = endPosition;
+        view.setTimesList(getNewTimes());
     }
 
-    private List<TimesModel> getNewTimes(int startPosition, int endPosition) {
-        if (startPosition == endPosition) {
+    private List<TimesModel> getNewTimes() {
+        if (departureStation == arrivalStation) {
             return new ArrayList<>();
         }
 
-        List<Integer> trainStations = getTrainStation(startPosition, endPosition);
+        List<Integer> trainStations = getTrainStation(departureStation, arrivalStation);
         List<TimesModel> timesList = new ArrayList<>();
         String startTime;
         String endTime;
@@ -37,8 +42,8 @@ public class SchedulePresenter {
 
         for (int trainIndex = 0; trainIndex < trainStations.size(); trainIndex++) {
             busNumber = trainStations.get(trainIndex);
-            startTime = Constants.SCHEDULE.get(new StopTimesKey(busNumber, Constants.DESTINATIONS.get(startPosition)));
-            endTime = Constants.SCHEDULE.get(new StopTimesKey(busNumber, Constants.DESTINATIONS.get(endPosition)));
+            startTime = Constants.SCHEDULE.get(new StopTimesKey(busNumber, Constants.DESTINATIONS.get(departureStation)));
+            endTime = Constants.SCHEDULE.get(new StopTimesKey(busNumber, Constants.DESTINATIONS.get(arrivalStation)));
 
             if (startTime != null && endTime != null) {
                 timesList.add(new TimesModel(startTime, endTime, busNumber));
