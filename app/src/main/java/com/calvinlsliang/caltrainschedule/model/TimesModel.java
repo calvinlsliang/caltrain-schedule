@@ -1,4 +1,4 @@
-package com.calvinlsliang.caltrainscheduler.model;
+package com.calvinlsliang.caltrainschedule.model;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

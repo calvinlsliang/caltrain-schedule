@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">CaltrainScheduler</string>
+    <string name="app_name">Caltrain Schedule</string>
     <string name="transfer">Transfer at %1$s at %2$s</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.calvinlsliang.caltrainscheduler;
+package com.calvinlsliang.caltrainschedule;
 
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -13,9 +13,9 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.caltrain.calvinlsliang.caltrainscheduler.R;
-import com.calvinlsliang.caltrainscheduler.model.TimesModel;
-import com.calvinlsliang.caltrainscheduler.util.Constants;
+import com.caltrain.calvinlsliang.caltrainschedule.R;
+import com.calvinlsliang.caltrainschedule.model.TimesModel;
+import com.calvinlsliang.caltrainschedule.util.Constants;
 
 import java.util.List;
 

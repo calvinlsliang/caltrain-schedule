@@ -1,4 +1,4 @@
-package com.calvinlsliang.caltrainscheduler;
+package com.calvinlsliang.caltrainschedule;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.caltrain.calvinlsliang.caltrainscheduler.R;
-import com.calvinlsliang.caltrainscheduler.model.TimesModel;
+import com.caltrain.calvinlsliang.caltrainschedule.R;
+import com.calvinlsliang.caltrainschedule.model.TimesModel;
 
 import java.util.ArrayList;
 import java.util.List;

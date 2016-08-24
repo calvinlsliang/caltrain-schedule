@@ -1,6 +1,6 @@
-package com.calvinlsliang.caltrainscheduler;
+package com.calvinlsliang.caltrainschedule;
 
-import com.calvinlsliang.caltrainscheduler.model.TimesModel;
+import com.calvinlsliang.caltrainschedule.model.TimesModel;
 
 import java.util.List;
 

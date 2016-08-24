@@ -1,9 +1,9 @@
-package com.calvinlsliang.caltrainscheduler.util;
+package com.calvinlsliang.caltrainschedule.util;
 
 import android.util.SparseArray;
 
-import com.calvinlsliang.caltrainscheduler.model.StopTimesKey;
-import com.calvinlsliang.caltrainscheduler.model.TransferModel;
+import com.calvinlsliang.caltrainschedule.model.StopTimesKey;
+import com.calvinlsliang.caltrainschedule.model.TransferModel;
 
 import java.util.Arrays;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package com.calvinlsliang.caltrainscheduler.model;
+package com.calvinlsliang.caltrainschedule.model;
 
 
 public class TransferModel {

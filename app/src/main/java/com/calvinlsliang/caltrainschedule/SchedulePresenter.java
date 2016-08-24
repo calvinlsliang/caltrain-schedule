@@ -1,9 +1,9 @@
-package com.calvinlsliang.caltrainscheduler;
+package com.calvinlsliang.caltrainschedule;
 
-import com.calvinlsliang.caltrainscheduler.model.StopTimesKey;
-import com.calvinlsliang.caltrainscheduler.model.TimesModel;
-import com.calvinlsliang.caltrainscheduler.model.TransferModel;
-import com.calvinlsliang.caltrainscheduler.util.Constants;
+import com.calvinlsliang.caltrainschedule.model.StopTimesKey;
+import com.calvinlsliang.caltrainschedule.model.TimesModel;
+import com.calvinlsliang.caltrainschedule.model.TransferModel;
+import com.calvinlsliang.caltrainschedule.util.Constants;
 
 import java.util.ArrayList;
 import java.util.List;

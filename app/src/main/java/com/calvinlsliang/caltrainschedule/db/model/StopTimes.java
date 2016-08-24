@@ -1,4 +1,4 @@
-package com.calvinlsliang.caltrainscheduler.db.model;
+package com.calvinlsliang.caltrainschedule.db.model;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
