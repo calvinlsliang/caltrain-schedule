@@ -1,6 +1,6 @@
-package com.calvinlsliang.caltrainscheduler.db;
+package com.calvinlsliang.caltrainschedule.db;
 
-import com.calvinlsliang.caltrainscheduler.db.model.StopTimes;
+import com.calvinlsliang.caltrainschedule.db.model.StopTimes;
 import com.j256.ormlite.android.apptools.OrmLiteConfigUtil;
 
 import java.io.File;

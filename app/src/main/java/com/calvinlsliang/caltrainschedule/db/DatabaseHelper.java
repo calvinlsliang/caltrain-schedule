@@ -1,11 +1,11 @@
-package com.calvinlsliang.caltrainscheduler.db;
+package com.calvinlsliang.caltrainschedule.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.caltrain.calvinlsliang.caltrainscheduler.R;
-import com.calvinlsliang.caltrainscheduler.db.model.StopTimes;
-import com.calvinlsliang.caltrainscheduler.util.Constants;
+import com.caltrain.calvinlsliang.caltrainschedule.R;
+import com.calvinlsliang.caltrainschedule.db.model.StopTimes;
+import com.calvinlsliang.caltrainschedule.util.Constants;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;

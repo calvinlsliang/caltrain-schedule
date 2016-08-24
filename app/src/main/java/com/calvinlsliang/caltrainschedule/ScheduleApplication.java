@@ -1,11 +1,11 @@
-package com.calvinlsliang.caltrainscheduler;
+package com.calvinlsliang.caltrainschedule;
 
 import android.app.Application;
 
-import com.calvinlsliang.caltrainscheduler.db.DatabaseHelper;
-import com.calvinlsliang.caltrainscheduler.db.model.StopTimes;
-import com.calvinlsliang.caltrainscheduler.model.StopTimesKey;
-import com.calvinlsliang.caltrainscheduler.util.Constants;
+import com.calvinlsliang.caltrainschedule.db.DatabaseHelper;
+import com.calvinlsliang.caltrainschedule.db.model.StopTimes;
+import com.calvinlsliang.caltrainschedule.model.StopTimesKey;
+import com.calvinlsliang.caltrainschedule.util.Constants;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 
