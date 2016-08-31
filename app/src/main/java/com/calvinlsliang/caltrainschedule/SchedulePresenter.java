@@ -35,30 +35,25 @@ public class SchedulePresenter {
             return null;
         }
 
-        List<Integer> trainStations = getTrainStation(departureStation, arrivalStation);
+        List<Integer> trainStations = getTrainStation();
         List<TimesModel> timesList = new ArrayList<>();
 
-        TransferModel transferModel = null;
-        TimesModel timesModel;
-        String startTime;
-        String endTime;
-        int busNumber;
-
         for (int trainIndex = 0; trainIndex < trainStations.size(); trainIndex++) {
-            busNumber = trainStations.get(trainIndex);
-            startTime = Constants.SCHEDULE.get(new StopTimesKey(busNumber, Constants.DESTINATIONS.get(departureStation)));
-            endTime = Constants.SCHEDULE.get(new StopTimesKey(busNumber, Constants.DESTINATIONS.get(arrivalStation)));
+            int busNumber = trainStations.get(trainIndex);
+            String startTime = Constants.SCHEDULE.get(new StopTimesKey(busNumber, Constants.DESTINATIONS.get(departureStation)));
+            String endTime = Constants.SCHEDULE.get(new StopTimesKey(busNumber, Constants.DESTINATIONS.get(arrivalStation)));
+            TransferModel transferModel = null;
 
             if (endTime == null) {
                 transferModel = Constants.TRANSFERS.get(busNumber);
 
-                if (transferModel != null) {
+                if (transferModel != null && validTransfer(transferModel)) {
                     endTime = checkTransfers(transferModel.bus);
                 }
             }
 
             if (startTime != null && endTime != null) {
-                timesModel = new TimesModel(startTime, endTime, busNumber);
+                TimesModel timesModel = new TimesModel(startTime, endTime, busNumber);
                 if (transferModel != null) {
                     timesModel.setTransferLocation(transferModel.location);
                     timesModel.setTransferTime(transferModel.time);
@@ -70,8 +65,8 @@ public class SchedulePresenter {
         return timesList;
     }
 
-    private List<Integer> getTrainStation(int startPosition, int endPosition) {
-        final boolean isNorthbound = startPosition > endPosition;
+    private List<Integer> getTrainStation() {
+        final boolean isNorthbound = isNorthbound();
         if (isWeekend) {
             if (isNorthbound) {
                 return Constants.WEEKEND_NORTHBOUND_TRAIN_IDS;
@@ -89,5 +84,16 @@ public class SchedulePresenter {
 
     private String checkTransfers(int busNumber) {
          return Constants.SCHEDULE.get(new StopTimesKey(busNumber, Constants.DESTINATIONS.get(arrivalStation)));
+    }
+
+    private boolean validTransfer(TransferModel transferModel) {
+        final boolean isNorthbound = isNorthbound();
+
+        return isNorthbound ? departureStation > transferModel.busIndex : departureStation < transferModel.busIndex
+                && !transferModel.location.equals(Constants.DESTINATIONS.get(departureStation));
+    }
+
+    private boolean isNorthbound() {
+        return departureStation > arrivalStation;
     }
 }

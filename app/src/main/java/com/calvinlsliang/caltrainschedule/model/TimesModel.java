@@ -2,6 +2,7 @@ package com.calvinlsliang.caltrainschedule.model;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -23,7 +24,14 @@ public class TimesModel {
     public TimesModel(String startTime, String endTime, int busNumber) {
         try {
             final Date startDate = format.parse(startTime);
-            final Date endDate = format.parse(endTime);
+            Date endDate = format.parse(endTime);
+
+            if (startDate.after(endDate)) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(endDate);
+                calendar.add(Calendar.DATE, 1);
+                endDate = calendar.getTime();
+            }
 
             this.startTime = startTime;
             this.endTime = endTime;
