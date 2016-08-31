@@ -13,7 +13,7 @@ import java.util.Map;
 public class Constants {
 
     public static final List<String> DESTINATIONS = Arrays.asList(
-            "San Francisco", "22nd St", "Bayshore", "So. San Francisco", "San Bruno", "Millbrae", "Broadway", "Burlingame", "San Mateo", "Hayward Park", "Hillsdale", "Belmont", "San Carlos", "Redwood City", "Atherton", "Menlo Park", "Palo Alto", "California Ave", "San Antonio", "Mt View", "Sunnyvale", "Lawrence", "Santa Clara", "College Park", "San Jose Diridon", "Tamien", "Capitol", "Blossom Hill", "Morgan Hill", "San Martin", "Gilroy", "San Jose"
+            "San Francisco", "22nd St", "Bayshore", "So. San Francisco", "San Bruno", "Millbrae", "Broadway", "Burlingame", "San Mateo", "Hayward Park", "Hillsdale", "Belmont", "San Carlos", "Redwood City", "Atherton", "Menlo Park", "Palo Alto", "California Ave", "San Antonio", "Mt View", "Sunnyvale", "Lawrence", "Santa Clara", "College Park", "San Jose Diridon", "Tamien", "Capitol", "Blossom Hill", "Morgan Hill", "San Martin", "Gilroy"
     );
 
     public static final List<Integer> WEEKDAY_NORTHBOUND_TRAIN_IDS = Arrays.asList(
@@ -326,21 +326,22 @@ public class Constants {
         TRIP_ID_MAP.put("198", 198);
     }
 
+    // TODO Remove busIndex and just perform a search on DESTINATIONS
     public static final SparseArray<TransferModel> TRANSFERS;
     static {
         TRANSFERS = new SparseArray<>();
-        TRANSFERS.put(207, new TransferModel(211, "Menlo Park", "6:42 AM"));
-        TRANSFERS.put(217, new TransferModel(221, "Menlo Park", "7:42 AM"));
-        TRANSFERS.put(227, new TransferModel(231, "Menlo Park", "8:45 AM"));
-        TRANSFERS.put(261, new TransferModel(263, "Redwood City", "4:27 PM"));
-        TRANSFERS.put(269, new TransferModel(273, "Redwood City", "5:29 PM"));
-        TRANSFERS.put(279, new TransferModel(283, "Redwood City", "6:29 PM"));
-        TRANSFERS.put(208, new TransferModel(210, "San Carlos", "7:11 AM"));
-        TRANSFERS.put(218, new TransferModel(220, "San Carlos", "8:11 AM"));
-        TRANSFERS.put(228, new TransferModel(230, "San Carlos", "9:11 AM"));
-        TRANSFERS.put(264, new TransferModel(268, "Redwood City", "5:24 PM"));
-        TRANSFERS.put(274, new TransferModel(278, "Redwood City", "6:24 PM"));
-        TRANSFERS.put(284, new TransferModel(288, "Redwood City", "7:24 PM"));
+        TRANSFERS.put(207, new TransferModel(211, 15, "Menlo Park", "6:42 AM"));
+        TRANSFERS.put(217, new TransferModel(221, 15, "Menlo Park", "7:42 AM"));
+        TRANSFERS.put(227, new TransferModel(231, 15, "Menlo Park", "8:45 AM"));
+        TRANSFERS.put(261, new TransferModel(263, 13, "Redwood City", "4:27 PM"));
+        TRANSFERS.put(269, new TransferModel(273, 13, "Redwood City", "5:29 PM"));
+        TRANSFERS.put(279, new TransferModel(283, 13, "Redwood City", "6:29 PM"));
+        TRANSFERS.put(208, new TransferModel(210, 12, "San Carlos", "7:11 AM"));
+        TRANSFERS.put(218, new TransferModel(220, 12, "San Carlos", "8:11 AM"));
+        TRANSFERS.put(228, new TransferModel(230, 12, "San Carlos", "9:11 AM"));
+        TRANSFERS.put(264, new TransferModel(268, 13, "Redwood City", "5:24 PM"));
+        TRANSFERS.put(274, new TransferModel(278, 13, "Redwood City", "6:24 PM"));
+        TRANSFERS.put(284, new TransferModel(288, 13, "Redwood City", "7:24 PM"));
     }
 
 }
