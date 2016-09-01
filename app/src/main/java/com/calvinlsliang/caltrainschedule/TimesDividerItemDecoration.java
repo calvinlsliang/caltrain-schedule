@@ -11,7 +11,7 @@ import com.caltrain.calvinlsliang.caltrainschedule.R;
 
 public class TimesDividerItemDecoration extends RecyclerView.ItemDecoration {
 
-    private Drawable divider;
+    private final Drawable divider;
 
     public TimesDividerItemDecoration(Context context) {
         divider = ContextCompat.getDrawable(context, R.drawable.times_line_divider);

@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 public class TimesModel {
 
-    private final SimpleDateFormat format = new SimpleDateFormat("hh:mm aa", Locale.getDefault());
+    private static final SimpleDateFormat format = new SimpleDateFormat("hh:mm aa", Locale.getDefault());
 
     public String startTime;
     public String endTime;
@@ -38,6 +38,7 @@ public class TimesModel {
             this.duration = TimeUnit.MILLISECONDS.toMinutes(endDate.getTime() - startDate.getTime()) + " min";
 
         } catch (ParseException | NullPointerException e) {
+            e.printStackTrace();
         }
         this.busNumber = "#" + busNumber;
     }

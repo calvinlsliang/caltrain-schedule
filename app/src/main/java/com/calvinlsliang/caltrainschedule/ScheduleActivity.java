@@ -5,10 +5,13 @@ import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -24,22 +27,19 @@ import java.util.List;
 
 public class ScheduleActivity extends AppCompatActivity implements ScheduleActivityView {
 
+    private static final String[] emailAddresses = {"caltraincat@gmail.com"};
+
     private int dayPosition = 0;
     private int startPosition = 0;
     private int endPosition = 0;
     private Spinner spinnerStart;
     private Spinner spinnerEnd;
     private Spinner actionbarSpinnerDays;
-    private ImageView swap;
-    private ImageView feedback;
     private TimesAdapter timesAdapter;
-    private SchedulePresenter presenter = new SchedulePresenter();
+    private final SchedulePresenter presenter = new SchedulePresenter();
 
     private TextView noAvailableTrains;
     private RecyclerView timesList;
-
-    private static final String[] emailAddresses = {"caltraincat@gmail.com"};
-    private static final String emailSubject = "Feedback";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
 
     @Override
     public void setTimesList(@Nullable List<TimesModel> timesModels) {
-        if (timesModels == null) {
+        if (timesModels == null || timesModels.isEmpty()) {
             showNoAvailableTrainsMessage();
         } else {
             hideNoAvailableTrainsMessage();
@@ -82,17 +82,21 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
     }
 
     private void initActionBar() {
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar == null) {
+            return;
+        }
         actionBar.setDisplayShowTitleEnabled(false);
-        View view = getLayoutInflater().inflate(R.layout.actionbar_days, null);
+        View view = getLayoutInflater().inflate(R.layout.actionbar_days, (ViewGroup) null);
 
         actionbarSpinnerDays = (Spinner) view.findViewById(R.id.actionbar_spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.actionbar_textview, getResources().getStringArray(R.array.actionbar_days));
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                R.layout.actionbar_textview, getResources().getStringArray(R.array.actionbar_days));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        actionbarSpinnerDays.getBackground().setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
+        actionbarSpinnerDays.getBackground().setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_ATOP);
         actionbarSpinnerDays.setAdapter(adapter);
 
-        swap = (ImageView) view.findViewById(R.id.actionbar_swap);
+        ImageView swap = (ImageView) view.findViewById(R.id.actionbar_swap);
         swap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,14 +116,13 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
             }
         });
 
-        feedback = (ImageView) view.findViewById(R.id.actionbar_feedback);
+        ImageView feedback = (ImageView) view.findViewById(R.id.actionbar_feedback);
         feedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startEmailIntent();
             }
         });
-
 
         actionBar.setCustomView(view);
         actionBar.setDisplayShowCustomEnabled(true);
@@ -204,11 +207,11 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
         Intent intent = new Intent(Intent.ACTION_SENDTO);
         intent.setData(Uri.parse("mailto:"));
         intent.putExtra(Intent.EXTRA_EMAIL, emailAddresses);
-        intent.putExtra(Intent.EXTRA_SUBJECT, emailSubject);
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_subject));
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
         } else {
-            Toast.makeText(this, "No email provider set up.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.no_email_provider), Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -2,10 +2,10 @@ package com.calvinlsliang.caltrainschedule.model;
 
 
 public class TransferModel {
-    public int bus;
-    public int busIndex;
-    public String location;
-    public String time;
+    public final int bus;
+    public final int busIndex;
+    public final String location;
+    public final String time;
 
     public TransferModel(int bus, int busIndex, String location, String time) {
         this.bus = bus;
