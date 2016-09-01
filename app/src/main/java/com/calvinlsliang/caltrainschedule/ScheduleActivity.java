@@ -1,6 +1,8 @@
 package com.calvinlsliang.caltrainschedule;
 
+import android.content.Intent;
 import android.graphics.PorterDuff;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.caltrain.calvinlsliang.caltrainschedule.R;
 import com.calvinlsliang.caltrainschedule.model.TimesModel;
@@ -28,11 +31,15 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
     private Spinner spinnerEnd;
     private Spinner actionbarSpinnerDays;
     private ImageView swap;
+    private ImageView feedback;
     private TimesAdapter timesAdapter;
     private SchedulePresenter presenter = new SchedulePresenter();
 
     private TextView noAvailableTrains;
     private RecyclerView timesList;
+
+    private static final String[] emailAddresses = {"caltraincat@gmail.com"};
+    private static final String emailSubject = "Feedback";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +111,15 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
                 presenter.handleNewTimes(startPosition, endPosition);
             }
         });
+
+        feedback = (ImageView) view.findViewById(R.id.actionbar_feedback);
+        feedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startEmailIntent();
+            }
+        });
+
 
         actionBar.setCustomView(view);
         actionBar.setDisplayShowCustomEnabled(true);
@@ -182,5 +198,17 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
         timesList.setLayoutManager(new LinearLayoutManager(this));
         timesAdapter = new TimesAdapter();
         timesList.setAdapter(timesAdapter);
+    }
+
+    private void startEmailIntent() {
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:"));
+        intent.putExtra(Intent.EXTRA_EMAIL, emailAddresses);
+        intent.putExtra(Intent.EXTRA_SUBJECT, emailSubject);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, "No email provider set up.", Toast.LENGTH_SHORT).show();
+        }
     }
 }
