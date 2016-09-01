@@ -26,8 +26,7 @@ public class TimesAdapter extends RecyclerView.Adapter<TimesAdapter.ViewHolder> 
     public TimesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
         View v = LayoutInflater.from(context).inflate(R.layout.times_view, parent, false);
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
+        return new ViewHolder(v);
     }
 
     @Override
@@ -68,10 +67,10 @@ public class TimesAdapter extends RecyclerView.Adapter<TimesAdapter.ViewHolder> 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView time;
-        private TextView busNumber;
-        private TextView duration;
-        private TextView transfer;
+        private final TextView time;
+        private final TextView busNumber;
+        private final TextView duration;
+        private final TextView transfer;
 
         public ViewHolder(View itemView) {
             super(itemView);
