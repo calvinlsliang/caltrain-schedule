@@ -36,6 +36,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
     private Spinner spinnerEnd;
     private Spinner actionbarSpinnerDays;
     private TimesAdapter timesAdapter;
+    private ScheduleManager manager;
     private final SchedulePresenter presenter = new SchedulePresenter();
 
     private TextView noAvailableTrains;
@@ -45,6 +46,8 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
+
+        manager = new ScheduleManager(this);
 
         noAvailableTrains = (TextView) findViewById(R.id.no_trains);
         timesList = (RecyclerView) findViewById(R.id.times_list);
@@ -58,6 +61,12 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
     protected void onStart() {
         presenter.onStart(this);
         super.onStart();
+    }
+
+    @Override
+    protected void onDestroy() {
+        manager = null;
+        super.onDestroy();
     }
 
     @Override
@@ -110,6 +119,9 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
                 spinnerStart.setSelection(startPosition);
                 spinnerEnd.setSelection(endPosition);
 
+                manager.setStartPosition(startPosition);
+                manager.setEndPosition(endPosition);
+
                 initStationSpinnerListener();
 
                 presenter.handleNewTimes(startPosition, endPosition);
@@ -131,10 +143,13 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
     }
 
     private void initActionBarSpinnerListener() {
+        actionbarSpinnerDays.setSelection(manager.getDayPosition());
+
         actionbarSpinnerDays.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 dayPosition = position;
+                manager.setDayPosition(position);
                 presenter.handleNewDayRange(dayPosition);
             }
 
@@ -163,10 +178,14 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
     }
 
     private void initStationSpinnerListener() {
+        spinnerStart.setSelection(manager.getStartPosition());
+        spinnerEnd.setSelection(manager.getEndPosition());
+
         spinnerStart.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 startPosition = position;
+                manager.setStartPosition(position);
                 presenter.handleNewTimes(startPosition, endPosition);
             }
 
@@ -180,6 +199,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 endPosition = position;
+                manager.setEndPosition(position);
                 presenter.handleNewTimes(startPosition, endPosition);
             }
 
