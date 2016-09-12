@@ -166,11 +166,11 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
 
         List<String> spinnerArray = Constants.DESTINATIONS;
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spinnerArray);
+        ArrayAdapter<String> adapter = new StationArrayAdapter(this, android.R.layout.simple_spinner_item, spinnerArray, spinnerStart);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerStart.setAdapter(adapter);
 
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spinnerArray);
+        ArrayAdapter<String> adapter2 = new StationArrayAdapter(this, android.R.layout.simple_spinner_item, spinnerArray, spinnerEnd);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerEnd.setAdapter(adapter2);
 
