@@ -9,6 +9,10 @@
 ----------
 ### Version Updates
 
+v0.1.4
+- System Preference persistence
+- Highlight current station on dropdown
+
 v0.1.3
 - Lint
 - Bug fixes:
