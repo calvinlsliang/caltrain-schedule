@@ -5,6 +5,7 @@
 - Enable twitter feed
 - Add labels (arrival/departure) to spinners
 - Freeze column headers on times list for clarity
+- Dark theme?
 
 ----------
 ### Version Updates
