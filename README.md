@@ -10,6 +10,9 @@
 ----------
 ### Version Updates
 
+v0.1.5
+- Launcher icon!
+
 v0.1.4
 - System Preference persistence
 - Highlight current station on dropdown
