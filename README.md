@@ -1,11 +1,7 @@
 # caltrain-cat
 
 ### TODO
-- Add map to visualize where the stops are
-- Enable twitter feed
-- Add labels (arrival/departure) to spinners
-- Freeze column headers on times list for clarity
-- Dark theme?
+- https://github.com/calvinlsliang/caltrain-schedule/issues
 
 ----------
 ### Version Updates
