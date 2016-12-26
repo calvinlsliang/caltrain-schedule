@@ -23,6 +23,7 @@ import com.caltrain.calvinlsliang.caltrainschedule.R;
 import com.calvinlsliang.caltrainschedule.model.TimesModel;
 import com.calvinlsliang.caltrainschedule.util.Constants;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class ScheduleActivity extends AppCompatActivity implements ScheduleActivityView {
@@ -56,11 +57,13 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
         initActionBar();
         initSpinner();
         initTimesList();
+        initAutocompleteDayOfWeek();
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
+        initAutocompleteTime();
     }
 
     @Override
@@ -228,5 +231,23 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
         } else {
             Toast.makeText(this, getString(R.string.no_email_provider), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void initAutocompleteDayOfWeek() {
+        final Calendar calendar = Calendar.getInstance();
+        final int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        final int WEEKDAY = 0;
+        final int WEEKEND = 1;
+
+        if (dayOfWeek == Calendar.SUNDAY || dayOfWeek == Calendar.SATURDAY) {
+            actionbarSpinnerDays.setSelection(WEEKEND);
+        } else {
+            actionbarSpinnerDays.setSelection(WEEKDAY);
+        }
+    }
+
+    private void initAutocompleteTime() {
+        final Calendar calendar = Calendar.getInstance();
+        timesAdapter.setTime(calendar.getTime());
     }
 }

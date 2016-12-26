@@ -2,6 +2,7 @@
 <resources>
 
     <color name="green">#66BB6A</color>
+    <color name="lightGreen">#C8E6C9</color>
     <color name="darkGreen">#43A047</color>
 
     <color name="colorPrimary">@color/green</color>
