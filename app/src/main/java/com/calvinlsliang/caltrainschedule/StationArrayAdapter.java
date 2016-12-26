@@ -1,11 +1,12 @@
 package com.calvinlsliang.caltrainschedule;
 
-
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+
+import com.caltrain.calvinlsliang.caltrainschedule.R;
 
 import java.util.List;
 
@@ -25,8 +26,9 @@ public class StationArrayAdapter extends ArrayAdapter<String> {
         View view = super.getDropDownView(position, convertView, parent);
 
 
+        // // TODO: 12/25/16 add theme
         if (position == spinner.getSelectedItemPosition()) {
-            view.setBackgroundColor(context.getResources().getColor(android.R.color.holo_red_dark));
+            view.setBackgroundColor(context.getResources().getColor(R.color.green));
         } else {
             view.setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
         }
