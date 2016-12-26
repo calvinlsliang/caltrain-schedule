@@ -10,8 +10,11 @@
 ----------
 ### Version Updates
 
+v0.1.7
+- https://github.com/calvinlsliang/caltrain-schedule/milestone/2?closed=1
+
 v0.1.6
-- https://github.com/calvinlsliang/caltrain-schedule/issues?q=is%3Aissue+milestone%3Av1.0.6+is%3Aclosed
+- https://github.com/calvinlsliang/caltrain-schedule/milestone/1?closed=1
 
 v0.1.5
 - Launcher icon!
