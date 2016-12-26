@@ -57,12 +57,13 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
         initActionBar();
         initSpinner();
         initTimesList();
-        initAutocomplete();
+        initAutocompleteDayOfWeek();
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
+        initAutocompleteTime();
     }
 
     @Override
@@ -232,16 +233,12 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
         }
     }
 
-    private void initAutocomplete() {
+    private void initAutocompleteDayOfWeek() {
         final Calendar calendar = Calendar.getInstance();
-
-        initDayOfWeek(calendar.get(Calendar.DAY_OF_WEEK));
-        initTime();
-    }
-
-    private void initDayOfWeek(final int dayOfWeek) {
+        final int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
         final int WEEKDAY = 0;
         final int WEEKEND = 1;
+
         if (dayOfWeek == Calendar.SUNDAY || dayOfWeek == Calendar.SATURDAY) {
             actionbarSpinnerDays.setSelection(WEEKEND);
         } else {
@@ -249,9 +246,8 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
         }
     }
 
-    private void initTime() {
-
+    private void initAutocompleteTime() {
+        final Calendar calendar = Calendar.getInstance();
+        timesAdapter.setTime(calendar.getTime());
     }
-
-
 }
