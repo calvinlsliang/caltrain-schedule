@@ -15,8 +15,12 @@ public class SchedulePresenter {
     private int departureStation = 0;
     private int arrivalStation = 0;
 
-    protected void onStart(ScheduleActivityView view) {
+    protected void onCreate(ScheduleActivityView view) {
         this.view = view;
+    }
+
+    protected void onDestroy() {
+        this.view = null;
     }
 
     protected void handleNewDayRange(int dayPosition) {

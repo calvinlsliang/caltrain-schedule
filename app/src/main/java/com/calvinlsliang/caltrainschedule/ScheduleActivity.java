@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -47,6 +46,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
 
+        presenter.onCreate(this);
         manager = new ScheduleManager(this);
 
         noAvailableTrains = (TextView) findViewById(R.id.no_trains);
@@ -59,12 +59,12 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
 
     @Override
     protected void onStart() {
-        presenter.onStart(this);
         super.onStart();
     }
 
     @Override
     protected void onDestroy() {
+        presenter.onDestroy();
         manager = null;
         super.onDestroy();
     }
@@ -96,7 +96,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
             return;
         }
         actionBar.setDisplayShowTitleEnabled(false);
-        View view = getLayoutInflater().inflate(R.layout.actionbar_days, (ViewGroup) null);
+        View view = getLayoutInflater().inflate(R.layout.actionbar_days, null);
 
         actionbarSpinnerDays = (Spinner) view.findViewById(R.id.actionbar_spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
@@ -109,22 +109,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
         swap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int tempPosition = startPosition;
-                startPosition = endPosition;
-                endPosition = tempPosition;
-
-                spinnerStart.setOnItemSelectedListener(null);
-                spinnerEnd.setOnItemSelectedListener(null);
-
-                spinnerStart.setSelection(startPosition);
-                spinnerEnd.setSelection(endPosition);
-
-                manager.setStartPosition(startPosition);
-                manager.setEndPosition(endPosition);
-
-                initStationSpinnerListener();
-
-                presenter.handleNewTimes(startPosition, endPosition);
+                swapStartAndEnd();
             }
         });
 
@@ -221,6 +206,12 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
         timesList.setLayoutManager(new LinearLayoutManager(this));
         timesAdapter = new TimesAdapter();
         timesList.setAdapter(timesAdapter);
+    }
+
+    private void swapStartAndEnd() {
+        final int temp = manager.getStartPosition();
+        spinnerStart.setSelection(manager.getEndPosition());
+        spinnerEnd.setSelection(temp);
     }
 
     private void startEmailIntent() {
