@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -123,6 +124,9 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
 
         actionBar.setCustomView(view);
         actionBar.setDisplayShowCustomEnabled(true);
+
+        Toolbar parent = (Toolbar) view.getParent();
+        parent.setContentInsetsAbsolute(0, 0);
 
         initActionBarSpinnerListener();
     }
