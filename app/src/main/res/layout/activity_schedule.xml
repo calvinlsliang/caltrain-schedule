@@ -12,8 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="4dp"
-        android:paddingLeft="12dp"
         android:spinnerMode="dropdown"
+        android:dropDownWidth="200dp"
         tools:text="Spinner 1"/>
 
     <Spinner
@@ -21,8 +21,8 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="4dp"
-        android:paddingLeft="12dp"
         android:spinnerMode="dropdown"
+        android:dropDownWidth="200dp"
         tools:text="Spinner 2"/>
 
     <android.support.v7.widget.RecyclerView
