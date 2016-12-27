@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface ScheduleActivityView {
     void setTimesList(List<TimesModel> timesModel);
+
+    void bestTimeFound(int position);
 }
