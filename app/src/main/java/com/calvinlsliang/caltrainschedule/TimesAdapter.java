@@ -22,33 +22,36 @@ import java.util.Locale;
 public class TimesAdapter extends RecyclerView.Adapter<TimesAdapter.ViewHolder> {
 
     private static final SimpleDateFormat format = new SimpleDateFormat("hh:mm aa", Locale.getDefault());
-    private static final SimpleDateFormat dbFormat = new SimpleDateFormat("hh:mm aa", Locale.getDefault());
     private static final DateFormat dateFormat = DateFormat.getTimeInstance(DateFormat.SHORT);
+    private static final int OFFSET = 1;
 
-    private List<TimesModel> timesModels = new ArrayList<>();
     private Context context;
-    private Date currentDate;
-    private int closestPositionMarked = -1;
+    private AutoscrollCallback autoscrollCallback;
+
+    private List<TimesModel> timesModels;
+    private int bestPositionMarked;
 
     public TimesAdapter() {
+        timesModels = new ArrayList<>();
+        bestPositionMarked = -1;
     }
 
     @Override
     public TimesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
-        View v = LayoutInflater.from(context).inflate(R.layout.times_view, parent, false);
+        final View v = LayoutInflater.from(context).inflate(R.layout.times_view, parent, false);
         return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(TimesAdapter.ViewHolder holder, int position) {
-        TimesModel timesModel = timesModels.get(holder.getAdapterPosition());
+        final TimesModel timesModel = timesModels.get(holder.getAdapterPosition());
         holder.time.setText(String.format("%s - %s", timesModel.startTime, timesModel.endTime));
         holder.busNumber.setText(timesModel.busNumber);
         holder.duration.setText(String.valueOf(timesModel.duration));
 
         handleTransfers(holder, timesModel);
-        handleAutocompleteTime(holder, timesModel, position);
+        handleBackgroundHighlighting(holder, position);
     }
 
     @Override
@@ -56,7 +59,11 @@ public class TimesAdapter extends RecyclerView.Adapter<TimesAdapter.ViewHolder> 
         return timesModels.size();
     }
 
-    public void setTimesList(@Nullable List<TimesModel> timesModel) {
+    public void setCallback(AutoscrollCallback autoscrollCallback) {
+        this.autoscrollCallback = autoscrollCallback;
+    }
+
+    public void setTimesList(@Nullable List<TimesModel> timesModel, Date date) {
         if (timesModel == null) {
             clearTimesList();
             return;
@@ -64,15 +71,27 @@ public class TimesAdapter extends RecyclerView.Adapter<TimesAdapter.ViewHolder> 
 
         this.timesModels = timesModel;
         notifyDataSetChanged();
-        closestPositionMarked = -1;
+        bestPositionMarked = -1;
+
+        findBestTime(timesModel, date);
     }
 
-    public void setTime(Date date) {
+    private void findBestTime(List<TimesModel> timesModels, Date date) {
         try {
-            this.currentDate = format.parse(dateFormat.format(date));
-            closestPositionMarked = -1;
-        } catch (ParseException e) {
+            final Date currentDate = format.parse(dateFormat.format(date));
 
+            for (int position = 0; position < timesModels.size(); position++) {
+                final TimesModel timesModel = timesModels.get(position);
+                final Date startDate = format.parse(timesModel.startTime);
+
+                if (isNextAvailableTime(currentDate, startDate) && checkPosition(position)) {
+                    // TODO: 12/26/16 fix theme
+                    bestPositionMarked = position;
+                    scrollToBestPosition();
+                    break;
+                }
+            }
+        } catch (ParseException e) {
         }
     }
 
@@ -86,34 +105,32 @@ public class TimesAdapter extends RecyclerView.Adapter<TimesAdapter.ViewHolder> 
         }
     }
 
-    private void handleAutocompleteTime(TimesAdapter.ViewHolder holder, TimesModel timesModel, int position) {
-        try {
-            final Date startDate = dbFormat.parse(timesModel.startTime);
+    private boolean checkPosition(int position) {
+        return this.bestPositionMarked < 0 || position == this.bestPositionMarked;
+    }
 
-            if (isNextAvailableTime(startDate) && checkPosition(position)) {
-                // TODO: 12/26/16 fix theme
-                holder.itemView.setBackgroundColor(context.getResources().getColor(R.color.lightGreen));
-                closestPositionMarked = position;
-            } else {
-                holder.itemView.setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
-            }
-        } catch (ParseException e) {
-            holder.itemView.setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
+    private boolean isNextAvailableTime(Date current, Date given) {
+        return current != null && current.before(given);
+    }
+
+    private void scrollToBestPosition() {
+        if (autoscrollCallback != null) {
+            autoscrollCallback.bestTimeFound(bestPositionMarked - OFFSET);
         }
     }
 
-    private boolean checkPosition(int position) {
-        return this.closestPositionMarked < 0 || position == this.closestPositionMarked;
-    }
-
-    private boolean isNextAvailableTime(Date given) {
-        return this.currentDate != null && this.currentDate.before(given);
+    private void handleBackgroundHighlighting(TimesAdapter.ViewHolder holder, int position) {
+        if (position == bestPositionMarked) {
+            holder.itemView.setBackgroundColor(context.getResources().getColor(R.color.lightGreen));
+        } else {
+            holder.itemView.setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
+        }
     }
 
     private void clearTimesList() {
         this.timesModels.clear();
         notifyDataSetChanged();
-        closestPositionMarked = -1;
+        bestPositionMarked = -1;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

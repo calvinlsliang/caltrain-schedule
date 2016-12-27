@@ -23,6 +23,7 @@ import com.caltrain.calvinlsliang.caltrainschedule.R;
 import com.calvinlsliang.caltrainschedule.model.TimesModel;
 import com.calvinlsliang.caltrainschedule.util.Constants;
 
+import java.lang.ref.WeakReference;
 import java.util.Calendar;
 import java.util.List;
 
@@ -42,6 +43,8 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
 
     private TextView noAvailableTrains;
     private RecyclerView timesList;
+
+    private AutoscrollCallback callback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +66,14 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
     @Override
     protected void onResume() {
         super.onResume();
+        callback = new AutoscrollCallbackImpl(this);
         initAutocompleteTime();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        callback = null;
     }
 
     @Override
@@ -81,7 +91,13 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
             hideNoAvailableTrainsMessage();
         }
 
-        timesAdapter.setTimesList(timesModels);
+        final Calendar calendar = Calendar.getInstance();
+        timesAdapter.setTimesList(timesModels, calendar.getTime());
+    }
+
+    @Override
+    public void bestTimeFound(int position) {
+        timesList.getLayoutManager().scrollToPosition(position);
     }
 
     private void showNoAvailableTrainsMessage() {
@@ -203,11 +219,6 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
     }
 
     private void initTimesList() {
-        final RecyclerView timesList = (RecyclerView) findViewById(R.id.times_list);
-        if (timesList == null) {
-            return;
-        }
-
         timesList.setHasFixedSize(true);
         timesList.addItemDecoration(new TimesDividerItemDecoration(this));
         timesList.setLayoutManager(new LinearLayoutManager(this));
@@ -248,6 +259,22 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
 
     private void initAutocompleteTime() {
         final Calendar calendar = Calendar.getInstance();
-        timesAdapter.setTime(calendar.getTime());
+        timesAdapter.setCallback(callback);
+    }
+
+    private static class AutoscrollCallbackImpl implements AutoscrollCallback {
+
+        private WeakReference<ScheduleActivityView> scheduleView;
+
+        public AutoscrollCallbackImpl(ScheduleActivityView scheduleView) {
+            this.scheduleView = new WeakReference<>(scheduleView);
+        }
+
+        @Override
+        public void bestTimeFound(int position) {
+            if (scheduleView.get() != null) {
+                scheduleView.get().bestTimeFound(position);
+            }
+        }
     }
 }
