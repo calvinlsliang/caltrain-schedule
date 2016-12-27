@@ -6,6 +6,9 @@
 ----------
 ### Version Updates
 
+v0.1.8
+- https://github.com/calvinlsliang/caltrain-schedule/milestone/3?closed=1
+
 v0.1.7
 - https://github.com/calvinlsliang/caltrain-schedule/milestone/2?closed=1
 
