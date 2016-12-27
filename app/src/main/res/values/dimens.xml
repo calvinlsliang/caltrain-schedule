@@ -2,4 +2,18 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="actionbarPadding">4dp</dimen>
+    <dimen name="actionbarSpinnerPaddingRight">16dp</dimen>
+    <dimen name="actionbarSwapPaddingLeft">20dp</dimen>
+    <dimen name="actionbarSwapPaddingRight">8dp</dimen>
+    <dimen name="stationSpinnerHeight">40dp</dimen>
+    <dimen name="stationSpinnerMargin">4dp</dimen>
+    <dimen name="stationSpinnerDropdown">250dp</dimen>
+    <dimen name="timesLayoutPadding">12dp</dimen>
+    <dimen name="timesPaddingRight">24dp</dimen>
+    <dimen name="timesTextSize">18sp</dimen>
+    <dimen name="durationTextSize">16sp</dimen>
+    <dimen name="durationPaddingRight">24dp</dimen>
+    <dimen name="busTextSize">18sp</dimen>
+    <dimen name="transferPaddingTop">8dp</dimen>
 </resources>
