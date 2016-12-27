@@ -6,6 +6,9 @@
 ----------
 ### Version Updates
 
+v1.0
+- Cleanup
+
 v0.1.8
 - https://github.com/calvinlsliang/caltrain-schedule/milestone/3?closed=1
 
