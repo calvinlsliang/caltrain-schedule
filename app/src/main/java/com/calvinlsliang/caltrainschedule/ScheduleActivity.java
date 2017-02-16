@@ -1,8 +1,6 @@
 package com.calvinlsliang.caltrainschedule;
 
-import android.content.Intent;
 import android.graphics.PorterDuff;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -17,7 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.caltrain.calvinlsliang.caltrainschedule.R;
 import com.calvinlsliang.caltrainschedule.model.TimesModel;
@@ -28,8 +25,6 @@ import java.util.Calendar;
 import java.util.List;
 
 public class ScheduleActivity extends AppCompatActivity implements ScheduleActivityView {
-
-    private static final String[] emailAddresses = {"caltraincat@gmail.com"};
 
     private int dayPosition = 0;
     private int startPosition = 0;
@@ -125,21 +120,11 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
         actionbarSpinnerDays.getBackground().setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_ATOP);
         actionbarSpinnerDays.setAdapter(adapter);
 
-        ImageView swap = (ImageView) view.findViewById(R.id.actionbar_swap);
-        swap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                swapStartAndEnd();
-            }
-        });
+        TextView swap = (TextView) view.findViewById(R.id.actionbar_swap_text);
+        swap.setOnClickListener(new OnSwapListener());
 
-        ImageView feedback = (ImageView) view.findViewById(R.id.actionbar_feedback);
-        feedback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startEmailIntent();
-            }
-        });
+        ImageView swapImage = (ImageView) view.findViewById(R.id.actionbar_swap_image);
+        swapImage.setOnClickListener(new OnSwapListener());
 
         actionBar.setCustomView(view);
         actionBar.setDisplayShowCustomEnabled(true);
@@ -232,18 +217,6 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
         spinnerEnd.setSelection(temp);
     }
 
-    private void startEmailIntent() {
-        Intent intent = new Intent(Intent.ACTION_SENDTO);
-        intent.setData(Uri.parse("mailto:"));
-        intent.putExtra(Intent.EXTRA_EMAIL, emailAddresses);
-        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_subject));
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(intent);
-        } else {
-            Toast.makeText(this, getString(R.string.no_email_provider), Toast.LENGTH_SHORT).show();
-        }
-    }
-
     private void initAutocompleteDayOfWeek() {
         final Calendar calendar = Calendar.getInstance();
         final int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
@@ -260,6 +233,13 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
     private void initAutocompleteTime() {
         final Calendar calendar = Calendar.getInstance();
         timesAdapter.setCallback(callback);
+    }
+
+    private class OnSwapListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            swapStartAndEnd();
+        }
     }
 
     private static class AutoscrollCallbackImpl implements AutoscrollCallback {

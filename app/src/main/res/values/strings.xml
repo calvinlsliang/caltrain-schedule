@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Caltrain Schedule</string>
     <string name="transfer">Transfer at %1$s at %2$s</string>
-    <string name="no_email_provider">No email provider set up.</string>
-    <string name="email_subject">Feedback</string>
+    <string name="reverse">Reverse</string>
 </resources>

@@ -3,9 +3,8 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="actionbarPadding">4dp</dimen>
-    <dimen name="actionbarSpinnerPaddingRight">16dp</dimen>
-    <dimen name="actionbarSwapPaddingLeft">20dp</dimen>
-    <dimen name="actionbarSwapPaddingRight">8dp</dimen>
+    <dimen name="actionbarSpinnerPaddingRight">12dp</dimen>
+    <dimen name="actionbarSwapPadding">8dp</dimen>
     <dimen name="stationSpinnerHeight">40dp</dimen>
     <dimen name="stationSpinnerMargin">4dp</dimen>
     <dimen name="stationSpinnerDropdown">250dp</dimen>
@@ -16,4 +15,5 @@
     <dimen name="durationPaddingRight">24dp</dimen>
     <dimen name="busTextSize">18sp</dimen>
     <dimen name="transferPaddingTop">8dp</dimen>
+    <dimen name="reverse_text_size">17sp</dimen>
 </resources>

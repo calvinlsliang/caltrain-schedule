@@ -8,27 +8,29 @@
 
     <Spinner
         android:id="@+id/actionbar_spinner"
-        android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingRight="@dimen/actionbarSpinnerPaddingRight"
         android:layout_centerVertical="true"/>
 
-    <ImageView
-        android:id="@+id/actionbar_feedback"
+    <TextView
+        android:id="@+id/actionbar_swap_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/feedback"
-        android:layout_toLeftOf="@+id/actionbar_swap"
+        android:paddingRight="@dimen/actionbarSwapPadding"
+        android:text="@string/reverse"
+        android:textColor="@color/white"
+        android:textSize="@dimen/reverse_text_size"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/actionbar_swap_image"
         android:layout_alignWithParentIfMissing="true"/>
 
     <ImageView
-        android:id="@+id/actionbar_swap"
+        android:id="@+id/actionbar_swap_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/actionbarSwapPaddingLeft"
-        android:paddingRight="@dimen/actionbarSwapPaddingRight"
         android:src="@drawable/swap"
+        android:paddingLeft="@dimen/actionbarSwapPadding"
+        android:paddingRight="@dimen/actionbarSwapPadding"
         android:layout_alignParentRight="true"/>
 
 </RelativeLayout>
