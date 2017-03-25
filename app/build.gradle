@@ -3,7 +3,7 @@ apply plugin: 'ormgap'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion '24.0.1'
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         applicationId "com.caltrain.calvinlsliang.caltrainscheduler"
