@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.caltrain.calvinlsliang.caltrainschedule.R;
 import com.calvinlsliang.caltrainschedule.db.model.StopTimes;
 import com.calvinlsliang.caltrainschedule.util.Constants;
+import com.calvinlsliang.caltrainschedule.util.ConstantsHelper;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
@@ -63,12 +64,13 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         try {
             final InputStreamReader is = new InputStreamReader(context.getAssets().open("stop_times.txt"));
             final BufferedReader reader = new BufferedReader(is);
+            final Constants constants = ConstantsHelper.getConstants();
 
             while ((line = reader.readLine()) != null) {
                 String[] split = line.split(splitBy);
-                tripId = Constants.TRIP_ID_MAP.get(split[0]);       // tripId
+                tripId = constants.getTripIdMap().get(split[0]);       // tripId
                 arrivalTime = split[1];                             // arrivalTime
-                stopName = Constants.STOP_ID_MAP.get(split[3]);     // stopName
+                stopName = constants.getStopIdMap().get(split[3]);     // stopName
 
                 getDao().create(new StopTimes(tripId, arrivalTime, stopName));
             }
