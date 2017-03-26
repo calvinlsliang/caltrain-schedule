@@ -10,31 +10,76 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Constants {
+public class Constants implements BaseConstants {
 
-    public static final List<String> DESTINATIONS = Arrays.asList(
+    @Override
+    public List<String> getDestinations() {
+        return DESTINATIONS;
+    }
+
+    @Override
+    public List<Integer> getWeekdayNorthboundTrainIdsList() {
+        return WEEKDAY_NORTHBOUND_TRAIN_IDS;
+    }
+
+    @Override
+    public List<Integer> getWeekdaySouthboundTrainIdsList() {
+        return WEEKDAY_SOUTHBOUND_TRAIN_IDS;
+    }
+
+    @Override
+    public List<Integer> getWeekendNorthboundTrainIdsList() {
+        return WEEKEND_NORTHBOUND_TRAIN_IDS;
+    }
+
+    @Override
+    public List<Integer> getWeekendSouthboundTrainIdsList() {
+        return WEEKEND_SOUTHBOUND_TRAIN_IDS;
+    }
+
+    @Override
+    public Map<StopTimesKey, String> getSchedule() {
+        return SCHEDULE;
+    }
+
+    @Override
+    public SparseArray<TransferModel> getTransfers() {
+        return TRANSFERS;
+    }
+
+    @Override
+    public Map<String, String> getStopIdMap() {
+        return STOP_ID_MAP;
+    }
+
+    @Override
+    public Map<String, Integer> getTripIdMap() {
+        return TRIP_ID_MAP;
+    }
+
+    private static final List<String> DESTINATIONS = Arrays.asList(
             "San Francisco", "22nd St", "Bayshore", "So. San Francisco", "San Bruno", "Millbrae", "Broadway", "Burlingame", "San Mateo", "Hayward Park", "Hillsdale", "Belmont", "San Carlos", "Redwood City", "Atherton", "Menlo Park", "Palo Alto", "California Ave", "San Antonio", "Mt View", "Sunnyvale", "Lawrence", "Santa Clara", "College Park", "San Jose Diridon", "Tamien", "Capitol", "Blossom Hill", "Morgan Hill", "San Martin", "Gilroy"
     );
 
-    public static final List<Integer> WEEKDAY_NORTHBOUND_TRAIN_IDS = Arrays.asList(
+    private static final List<Integer> WEEKDAY_NORTHBOUND_TRAIN_IDS = Arrays.asList(
             101, 103, 305, 207, 309, 211, 313, 215, 217, 319, 221, 323, 225, 227, 329, 231, 233, 135, 237, 139, 143, 147, 151, 155, 257, 159, 261, 263, 365, 267, 269, 371, 273, 375, 277, 279, 381, 283, 385, 287, 289, 191, 193, 195, 197, 199
     );
 
-    public static final List<Integer> WEEKDAY_SOUTHBOUND_TRAIN_IDS = Arrays.asList(
+    private static final List<Integer> WEEKDAY_SOUTHBOUND_TRAIN_IDS = Arrays.asList(
             102, 104, 206, 208, 210, 312, 314, 216, 218, 220, 322, 324, 226, 228, 230, 332, 134, 236, 138, 142, 146, 150, 152, 254, 156, 258, 360, 262, 264, 366, 268, 370, 272, 274, 376, 278, 380, 282, 284, 386, 288, 190, 192, 194, 196, 198
     );
 
-    public static final List<Integer> WEEKEND_NORTHBOUND_TRAIN_IDS = Arrays.asList(
+    private static final List<Integer> WEEKEND_NORTHBOUND_TRAIN_IDS = Arrays.asList(
             421, 423, 425, 427, 801, 429, 431, 433, 435, 437, 439, 441, 803, 443, 445, 447, 449, 451
     );
 
-    public static final List<Integer> WEEKEND_SOUTHBOUND_TRAIN_IDS = Arrays.asList(
+    private static final List<Integer> WEEKEND_SOUTHBOUND_TRAIN_IDS = Arrays.asList(
             422, 424, 426, 428, 802, 430, 432, 434, 436, 438, 440, 442, 804, 444, 446, 448, 450, 454
     );
 
-    public static final HashMap<StopTimesKey, String> SCHEDULE = new HashMap<>();
+    private static final Map<StopTimesKey, String> SCHEDULE = new HashMap<>();
 
-    public static final Map<String, String> STOP_ID_MAP;
+    private static final Map<String, String> STOP_ID_MAP;
     static {
         STOP_ID_MAP = new HashMap<>();
         STOP_ID_MAP.put("70011", "San Francisco");
@@ -103,7 +148,7 @@ public class Constants {
         STOP_ID_MAP.put("777403", "Tamien");
     }
 
-    public static final Map<String, Integer> TRIP_ID_MAP;
+    private static final Map<String, Integer> TRIP_ID_MAP;
     static {
         TRIP_ID_MAP = new HashMap<>();
         TRIP_ID_MAP.put("23a", 23);
@@ -327,7 +372,7 @@ public class Constants {
     }
 
     // TODO Remove busIndex and just perform a search on DESTINATIONS
-    public static final SparseArray<TransferModel> TRANSFERS;
+    private static final SparseArray<TransferModel> TRANSFERS;
     static {
         TRANSFERS = new SparseArray<>();
         TRANSFERS.put(207, new TransferModel(211, 15, "Menlo Park", "6:42 AM"));

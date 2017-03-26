@@ -6,6 +6,7 @@ import com.calvinlsliang.caltrainschedule.db.DatabaseHelper;
 import com.calvinlsliang.caltrainschedule.db.model.StopTimes;
 import com.calvinlsliang.caltrainschedule.model.StopTimesKey;
 import com.calvinlsliang.caltrainschedule.util.Constants;
+import com.calvinlsliang.caltrainschedule.util.ConstantsHelper;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 
@@ -31,9 +32,10 @@ public class ScheduleApplication extends Application {
         try {
             final Dao<StopTimes, Long> stopTimesDao = getHelper().getDao();
             final List<StopTimes> stopTimesList = stopTimesDao.queryForAll();
+            final Constants constants = ConstantsHelper.getConstants();
 
             for (StopTimes stopTime : stopTimesList) {
-                Constants.SCHEDULE.put(new StopTimesKey(stopTime.tripId, stopTime.stopName), stopTime.arrivalTime);
+                constants.getSchedule().put(new StopTimesKey(stopTime.tripId, stopTime.stopName), stopTime.arrivalTime);
             }
         } catch(SQLException e) {
             e.printStackTrace();

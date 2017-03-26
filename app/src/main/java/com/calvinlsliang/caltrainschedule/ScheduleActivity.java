@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.caltrain.calvinlsliang.caltrainschedule.R;
 import com.calvinlsliang.caltrainschedule.model.TimesModel;
 import com.calvinlsliang.caltrainschedule.util.Constants;
+import com.calvinlsliang.caltrainschedule.util.ConstantsHelper;
 
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
@@ -40,6 +41,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
     private TimesAdapter timesAdapter;
     private ScheduleManager manager;
     private final SchedulePresenter presenter = new SchedulePresenter();
+    private Constants constants = ConstantsHelper.getConstants();
 
     private TextView noAvailableTrains;
     private RecyclerView timesList;
@@ -172,7 +174,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleActiv
         spinnerStart = (Spinner) findViewById(R.id.spinnerStart);
         spinnerEnd = (Spinner) findViewById(R.id.spinnerEnd);
 
-        List<String> spinnerArray = Constants.DESTINATIONS;
+        List<String> spinnerArray = constants.getDestinations();
 
         ArrayAdapter<String> adapter = new StationArrayAdapter(this, android.R.layout.simple_spinner_item, spinnerArray, spinnerStart);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

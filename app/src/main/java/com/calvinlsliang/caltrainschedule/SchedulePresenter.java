@@ -4,6 +4,7 @@ import com.calvinlsliang.caltrainschedule.model.StopTimesKey;
 import com.calvinlsliang.caltrainschedule.model.TimesModel;
 import com.calvinlsliang.caltrainschedule.model.TransferModel;
 import com.calvinlsliang.caltrainschedule.util.Constants;
+import com.calvinlsliang.caltrainschedule.util.ConstantsHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ public class SchedulePresenter {
     private boolean isWeekend;
     private int departureStation = 0;
     private int arrivalStation = 0;
+    private Constants constants = ConstantsHelper.getConstants();
 
     protected void onCreate(ScheduleActivityView view) {
         this.view = view;
@@ -44,12 +46,12 @@ public class SchedulePresenter {
 
         for (int trainIndex = 0; trainIndex < trainStations.size(); trainIndex++) {
             int busNumber = trainStations.get(trainIndex);
-            String startTime = Constants.SCHEDULE.get(new StopTimesKey(busNumber, Constants.DESTINATIONS.get(departureStation)));
-            String endTime = Constants.SCHEDULE.get(new StopTimesKey(busNumber, Constants.DESTINATIONS.get(arrivalStation)));
+            String startTime = constants.getSchedule().get(new StopTimesKey(busNumber, constants.getDestinations().get(departureStation)));
+            String endTime = constants.getSchedule().get(new StopTimesKey(busNumber, constants.getDestinations().get(arrivalStation)));
             TransferModel transferModel = null;
 
             if (endTime == null) {
-                transferModel = Constants.TRANSFERS.get(busNumber);
+                transferModel = constants.getTransfers().get(busNumber);
 
                 if (transferModel != null && validTransfer(transferModel)) {
                     endTime = checkTransfers(transferModel.bus);
@@ -73,28 +75,28 @@ public class SchedulePresenter {
         final boolean isNorthbound = isNorthbound();
         if (isWeekend) {
             if (isNorthbound) {
-                return Constants.WEEKEND_NORTHBOUND_TRAIN_IDS;
+                return constants.getWeekendNorthboundTrainIdsList();
             } else {
-                return Constants.WEEKEND_SOUTHBOUND_TRAIN_IDS;
+                return constants.getWeekendSouthboundTrainIdsList();
             }
         } else {
             if (isNorthbound) {
-                return Constants.WEEKDAY_NORTHBOUND_TRAIN_IDS;
+                return constants.getWeekdayNorthboundTrainIdsList();
             } else {
-                return Constants.WEEKDAY_SOUTHBOUND_TRAIN_IDS;
+                return constants.getWeekdaySouthboundTrainIdsList();
             }
         }
     }
 
     private String checkTransfers(int busNumber) {
-         return Constants.SCHEDULE.get(new StopTimesKey(busNumber, Constants.DESTINATIONS.get(arrivalStation)));
+         return constants.getSchedule().get(new StopTimesKey(busNumber, constants.getDestinations().get(arrivalStation)));
     }
 
     private boolean validTransfer(TransferModel transferModel) {
         final boolean isNorthbound = isNorthbound();
 
         return isNorthbound ? departureStation > transferModel.busIndex : departureStation < transferModel.busIndex
-                && !transferModel.location.equals(Constants.DESTINATIONS.get(departureStation));
+                && !transferModel.location.equals(constants.getDestinations().get(departureStation));
     }
 
     private boolean isNorthbound() {
