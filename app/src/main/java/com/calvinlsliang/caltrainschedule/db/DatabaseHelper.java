@@ -20,7 +20,7 @@ import java.sql.SQLException;
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     private static final String DATABASE_NAME = "scheduler.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private Dao<StopTimes, Long> stopTimes = null;
     private final Context context;
@@ -34,7 +34,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
         try {
             TableUtils.createTable(connectionSource, StopTimes.class);
-            populateStopTimes();
+            populateStopTimes("stop_times.txt", ConstantsHelper.VERSION.INITIAL);
+            populateStopTimes("stop_times_spring_2017.txt", ConstantsHelper.VERSION.SPRING_2017);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -50,9 +51,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         }
     }
 
-    // Populate db with static data from CSV
-    private void populateStopTimes() throws SQLException {
-
+    private void populateStopTimes(String filename, ConstantsHelper.VERSION version) throws SQLException {
         // trip_id,arrival_time,departure_time,stop_id,stop_sequence,pickup_type,drop_off_type
 
         final String splitBy = ",";
@@ -62,17 +61,18 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         String stopName;
 
         try {
-            final InputStreamReader is = new InputStreamReader(context.getAssets().open("stop_times.txt"));
+            final InputStreamReader is = new InputStreamReader(context.getAssets().open(filename));
             final BufferedReader reader = new BufferedReader(is);
-            final Constants constants = ConstantsHelper.getConstants();
+            final Constants constants = ConstantsHelper.getConstantsFromVersion(version);
 
             while ((line = reader.readLine()) != null) {
                 String[] split = line.split(splitBy);
-                tripId = constants.getTripIdMap().get(split[0]);       // tripId
-                arrivalTime = split[1];                             // arrivalTime
-                stopName = constants.getStopIdMap().get(split[3]);     // stopName
 
-                getDao().create(new StopTimes(tripId, arrivalTime, stopName));
+                tripId = constants.getTripIdMap().get(split[0]);
+                arrivalTime = split[1];
+                stopName = constants.getStopIdMap().get(split[3]);
+
+                getDao().create(new StopTimes(tripId, arrivalTime, stopName, version));
             }
 
             is.close();

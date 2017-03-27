@@ -1,6 +1,6 @@
 # caltrain-cat
 
-### TODO
+### Issues
 - https://github.com/calvinlsliang/caltrain-schedule/issues
 
 ----------

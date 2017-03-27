@@ -15,6 +15,9 @@ fieldName=arrivalTime
 # --field-start--
 fieldName=stopName
 # --field-end--
+# --field-start--
+fieldName=version
+# --field-end--
 # --table-fields-end--
 # --table-end--
 #################################
