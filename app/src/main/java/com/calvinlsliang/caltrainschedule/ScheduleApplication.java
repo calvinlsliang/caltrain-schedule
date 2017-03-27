@@ -31,8 +31,9 @@ public class ScheduleApplication extends Application {
     private void initSchedules() {
         try {
             final Dao<StopTimes, Long> stopTimesDao = getHelper().getDao();
-            final List<StopTimes> stopTimesList = stopTimesDao.queryForAll();
+            final ConstantsHelper.VERSION version = ConstantsHelper.getVersion();
             final Constants constants = ConstantsHelper.getConstants();
+            final List<StopTimes> stopTimesList = stopTimesDao.queryForEq(StopTimes.VERSION, ConstantsHelper.VERSION.valueOf(version));
 
             for (StopTimes stopTime : stopTimesList) {
                 constants.getSchedule().put(new StopTimesKey(stopTime.tripId, stopTime.stopName), stopTime.arrivalTime);
