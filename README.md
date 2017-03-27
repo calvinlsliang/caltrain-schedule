@@ -6,6 +6,9 @@
 ----------
 ### Version Updates
 
+v2.0
+- Spring 2017 changes http://www.caltrain.com/riderinfo/2017ServiceChanges.html
+
 v1.0
 - Cleanup
 
