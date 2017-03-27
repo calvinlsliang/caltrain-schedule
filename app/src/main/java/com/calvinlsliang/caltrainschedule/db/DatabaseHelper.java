@@ -64,13 +64,15 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         try {
             final InputStreamReader is = new InputStreamReader(context.getAssets().open("stop_times.txt"));
             final BufferedReader reader = new BufferedReader(is);
+            final ConstantsHelper.VERSION version = ConstantsHelper.getVersion();
             final Constants constants = ConstantsHelper.getConstants();
 
             while ((line = reader.readLine()) != null) {
                 String[] split = line.split(splitBy);
-                tripId = constants.getTripIdMap().get(split[0]);       // tripId
-                arrivalTime = split[1];                             // arrivalTime
-                stopName = constants.getStopIdMap().get(split[3]);     // stopName
+
+                tripId = getTripId(version, constants, split[0]);
+                arrivalTime = split[1];
+                stopName = constants.getStopIdMap().get(split[3]);
 
                 getDao().create(new StopTimes(tripId, arrivalTime, stopName));
             }
@@ -92,5 +94,14 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void close() {
         super.close();
         stopTimes = null;
+    }
+
+    private int getTripId(ConstantsHelper.VERSION version, Constants constants, String tripId) {
+        if (version == ConstantsHelper.VERSION.INITIAL) {
+            return constants.getTripIdMap().get(tripId);
+        } else if (version == ConstantsHelper.VERSION.SPRING_2017) {
+            return Integer.valueOf(tripId);
+        }
+        return -1;
     }
 }

@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Constants_3_16 implements Constants {
+public class ConstantsInitial implements Constants {
 
     @Override
     public List<String> getDestinations() {
@@ -371,22 +371,20 @@ public class Constants_3_16 implements Constants {
         TRIP_ID_MAP.put("198", 198);
     }
 
-    // TODO Remove busIndex and just perform a search on DESTINATIONS
     private static final SparseArray<TransferModel> TRANSFERS;
     static {
         TRANSFERS = new SparseArray<>();
-        TRANSFERS.put(207, new TransferModel(211, 15, "Menlo Park", "6:42 AM"));
-        TRANSFERS.put(217, new TransferModel(221, 15, "Menlo Park", "7:42 AM"));
-        TRANSFERS.put(227, new TransferModel(231, 15, "Menlo Park", "8:45 AM"));
-        TRANSFERS.put(261, new TransferModel(263, 13, "Redwood City", "4:27 PM"));
-        TRANSFERS.put(269, new TransferModel(273, 13, "Redwood City", "5:29 PM"));
-        TRANSFERS.put(279, new TransferModel(283, 13, "Redwood City", "6:29 PM"));
-        TRANSFERS.put(208, new TransferModel(210, 12, "San Carlos", "7:11 AM"));
-        TRANSFERS.put(218, new TransferModel(220, 12, "San Carlos", "8:11 AM"));
-        TRANSFERS.put(228, new TransferModel(230, 12, "San Carlos", "9:11 AM"));
-        TRANSFERS.put(264, new TransferModel(268, 13, "Redwood City", "5:24 PM"));
-        TRANSFERS.put(274, new TransferModel(278, 13, "Redwood City", "6:24 PM"));
-        TRANSFERS.put(284, new TransferModel(288, 13, "Redwood City", "7:24 PM"));
+        TRANSFERS.put(207, new TransferModel(211, DESTINATIONS.indexOf("Menlo Park"), "Menlo Park", "6:42 AM"));
+        TRANSFERS.put(217, new TransferModel(221, DESTINATIONS.indexOf("Menlo Park"), "Menlo Park", "7:42 AM"));
+        TRANSFERS.put(227, new TransferModel(231, DESTINATIONS.indexOf("Menlo Park"), "Menlo Park", "8:45 AM"));
+        TRANSFERS.put(261, new TransferModel(263, DESTINATIONS.indexOf("Redwood City"), "Redwood City", "4:27 PM"));
+        TRANSFERS.put(269, new TransferModel(273, DESTINATIONS.indexOf("Redwood City"), "Redwood City", "5:29 PM"));
+        TRANSFERS.put(279, new TransferModel(283, DESTINATIONS.indexOf("Redwood City"), "Redwood City", "6:29 PM"));
+        TRANSFERS.put(208, new TransferModel(210, DESTINATIONS.indexOf("San Carlos"), "San Carlos", "7:11 AM"));
+        TRANSFERS.put(218, new TransferModel(220, DESTINATIONS.indexOf("San Carlos"), "San Carlos", "8:11 AM"));
+        TRANSFERS.put(228, new TransferModel(230, DESTINATIONS.indexOf("San Carlos"), "San Carlos", "9:11 AM"));
+        TRANSFERS.put(264, new TransferModel(268, DESTINATIONS.indexOf("Redwood City"), "Redwood City", "5:24 PM"));
+        TRANSFERS.put(274, new TransferModel(278, DESTINATIONS.indexOf("Redwood City"), "Redwood City", "6:24 PM"));
+        TRANSFERS.put(284, new TransferModel(288, DESTINATIONS.indexOf("Redwood City"), "Redwood City", "7:24 PM"));
     }
-
 }
